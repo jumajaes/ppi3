@@ -1,0 +1,11 @@
+.App {
+    background-color: rgb(160, 186, 145);
+  }
+
+  .AppHomeppal{
+    
+    
+    display: grid;
+    pad: 60px;
+    
+  }

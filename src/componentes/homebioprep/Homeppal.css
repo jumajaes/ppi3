@@ -1,0 +1,30 @@
+.Homeppal{
+    background-color: rgb(193, 244, 198);;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+    grid-gap: 50px;
+    text-align: center;
+    padding: 2%;
+
+}
+
+.productos{
+
+    padding: 8%;
+    background-color:rgb(184, 227, 162);
+    border-top-right-radius: 10%;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%; 
+
+}   
+   
+    
+
+
+.img{
+    border-radius: 50%;
+    width: 190px;
+    height: 190px;
+}
+
