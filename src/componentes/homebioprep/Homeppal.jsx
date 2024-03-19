@@ -48,17 +48,23 @@ export function Homeppal() {
           (producto)=>{
             return(
               
-                <div className="productos"> 
-                <img className="img" src = {producto.image} alt = {producto.name}/>
-               
-                <h4>CODIGO: {producto.id}</h4>
-                <h4>NOMBRE: {producto.name}</h4>
-                
-                <h2>CATEGORIA: {producto.categoria}</h2>
-                <h2>CONTACTO DEL VENDEDOR: {producto.contacto}</h2>
-                <p>PRECIO UNITARIO: {producto.precioU}</p>
-                <h2>DESCRIPCION: {producto.descripcion}</h2>
-                
+                <div>
+                    <title>Listado de Productos</title>
+                    <body>
+                      <div class="product-card">
+                          <img class="product-image" src={producto.image} alt={producto.name}></img>
+                          <div className="informacion">
+                          <h1 class="product-name">{producto.name}</h1>
+                          <h2 class="product-categoria">Categoria: {producto.categoria} </h2>
+                          <h2 class="product-descripcion">Descripcion:</h2>
+                          <h2 class="product-descripcion">{producto.descripcion}</h2>
+                          <p class="product-price">Precio Unidad: $ {producto.precioU}</p>
+                          </div>
+                          <button>Contactar  Vendedor</button>
+                      </div>
+                    
+                    </body>
+                  </div>
                 
               </div>
             )
