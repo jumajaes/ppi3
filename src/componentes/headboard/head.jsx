@@ -1,5 +1,7 @@
 import React from 'react'
 import logo from "./logoBP.png"
+import logoXL from "./logoXL.png"
+
 import "./head.css"
 
 export function Head() {
@@ -8,10 +10,13 @@ export function Head() {
     <div >
     <nav className="head">
         
-       <h1 className='titulo'>BioPrep</h1>
-       <h1>
-       <img className='imghead' src = {logo} alt = "a"></img> 
-       </h1>
+
+      <img className='imghead' src = {logo} alt = "a"></img>
+      
+             <img className='XL' src={logoXL} alt="bioPrep"></img>
+       
+        
+       
         <ul className= "menu">
           
            <div>

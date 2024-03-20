@@ -1,17 +1,24 @@
-.Homeppal{
-    background-color: rgb(193, 244, 198);;
+.Homeppal {
+    background-color: rgb(255, 255, 255);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
     grid-gap: 50px;
     text-align: center;
-    padding: 2%;
-
+    padding: 5%;
+    
 }
 
-.productos{
+.fondo:hover {
+    transform: scale(1.1); /* Aumenta la escala al pasar el cursor */
+}
 
-    padding: 8%;
+
+.fondo{
+    transition: transform 0.3s ease; /* Transición de escala */
+    display: flex;
+    justify-content: center;
+    padding: 12%;
     background-color:rgb(184, 227, 162);
     border-top-right-radius: 10%;
     border-top-left-radius: 10%;
@@ -19,12 +26,27 @@
 
 }   
    
+.btContacto{
+    background: rgb(255, 255, 255);
+    border: 1px solid yellow;
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+    height: 60px; /* Ajusta la altura según tus necesidades */
+    border-radius: 24px;
     
+    font-weight: bold;
+    color: rgb(0, 0, 0); /* Cambia el color del texto si es necesario */
+    transition: background-color 0.3s ease; /* Transición de color */
+}
 
+.btContacto:hover {
+background: palegreen; /* Color al pasar el cursor */
+}
 
 .img{
-    border-radius: 50%;
-    width: 190px;
-    height: 190px;
+    
+    display: flex;
+    border-radius: 100%;
+    width: auto;
+    height: auto;
 }
 

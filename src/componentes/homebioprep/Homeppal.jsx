@@ -48,7 +48,7 @@ export function Homeppal() {
           (producto)=>{
             return(
               
-                <div>
+                <div className="fondo">
                     <title>Listado de Productos</title>
                     <body>
                       <div class="product-card">
@@ -60,7 +60,7 @@ export function Homeppal() {
                           <h2 class="product-descripcion">{producto.descripcion}</h2>
                           <p class="product-price">Precio Unidad: $ {producto.precioU}</p>
                           </div>
-                          <button>Contactar  Vendedor</button>
+                          <button className="btContacto"> Contactar  Vendedor</button>
                       </div>
                     
                     </body>
