@@ -65,8 +65,6 @@ export function Homeppal() {
                     
                     </body>
                   </div>
-                
-              </div>
             )
           }       
         )
