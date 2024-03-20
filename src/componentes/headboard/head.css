@@ -5,8 +5,8 @@
     width: 100%;
     height: 50%; /* Ajusta la altura según tus necesidades */
     background-color: rgb(255, 255, 255);
-    border-bottom: 5px solid rgb(193, 244, 198);
-    border-top-left-radius: 90%;
+    border-bottom: 5px solid rgb(180, 214, 158);
+    border-top-left-radius: 100%;
     
 }
 
@@ -15,25 +15,29 @@
 }
 
 .XL {
+    position: absolute;
+    top: 0%;
+    left: 5%;
     height: 190px;
     width: 290px;
 }
 
 .imghead {
     position: absolute;
-    top: 10%;
+    top: 2%;
     left: 45%;
-    height: 100px;
+    height: 150px;
 }
 
 .menu {
     list-style: none;
-    padding: 2%;
+    padding: 1%;
 }
 
-.btNosotros {
+.bt {
+    
     background: rgb(255, 255, 255);
-    border: 1px solid yellow;
+    border: 1px solid rgb(184, 227, 162);
     width: 150px; /* Ajusta el ancho según tus necesidades */
     height: 40px;
     border-radius: 24px;
@@ -43,26 +47,11 @@
     font-weight: bold;
     color: rgb(0, 0, 0); /* Cambia el color del texto si es necesario */
     transition: background-color 0.3s ease; /* Transición de color */
+    transition: transform 0.3s ease; /* Transición de escala */
 }
 
-.btNosotros:hover {
+.bt:hover {
     background: palegreen; /* Color al pasar el cursor */
+    transform: scale(1.3); /* Aumenta la escala al pasar el cursor */
 }
 
-.btVendedores {
-    background: rgb(255, 255, 255);
-    border: 1px solid yellow;
-    width: 150px; /* Ajusta el ancho según tus necesidades */
-    height: 40px; /* Ajusta la altura según tus necesidades */
-    border-radius: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: rgb(0, 0, 0); /* Cambia el color del texto si es necesario */
-    transition: background-color 0.3s ease; /* Transición de color */
-}
-
-.btVendedores:hover {
-    background-color: palegreen; /* Color al pasar el cursor */
-}

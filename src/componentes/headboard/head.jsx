@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from "./logoBP.png"
 import logoXL from "./logoXL.png"
+import {Link} from "react-router-dom"
 
 import "./head.css"
 
@@ -11,20 +12,21 @@ export function Head() {
     <nav className="head">
         
 
-      <img className='imghead' src = {logo} alt = "a"></img>
-      
-             <img className='XL' src={logoXL} alt="bioPrep"></img>
+      <Link to="/"><img className='imghead' src = {logo} alt = "a"></img></Link>
+      <Link to="/"><img className='XL' src={logoXL} alt="bioPrep"></img></Link>
        
         
        
         <ul className= "menu">
           
-           <div>
+          
+            <li><Link className='bt' to="/">Inicio</Link></li>
             <p></p>
-            <li><button className='btNosotros'>Nosotros</button></li>
+            <li><Link className='bt' to="/nosotros">Nosotros</Link></li>
             <p></p>
-            <li><button className='btVendedores'>Vendedor</button></li>
-            </div>
+            <li><Link><button className='bt'>Vendedor</button></Link></li>
+            <p></p>
+          
         </ul>
     </nav>
     </div>
