@@ -24,7 +24,7 @@ export function Head() {
             <p></p>
             <li><Link className='bt' to="/nosotros">Nosotros</Link></li>
             <p></p>
-            <li><Link><button className='bt'>Vendedor</button></Link></li>
+            <li><Link className='bt' to="/Sesion">Inicia Sesion</Link></li>
             <p></p>
           
         </ul>

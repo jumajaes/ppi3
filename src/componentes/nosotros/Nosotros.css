@@ -1,5 +1,37 @@
-.nosostros{
+.nosotros{
     display: flex;
+    place-items: center;
     justify-content: center;
-    align-items: center;
+    grid-template-columns: 1fr;
+    
 }
+
+.imgLogo{
+
+    position: absolute;
+    top: 30%;
+    left: 30%;
+
+}
+
+.imgName{
+    position: absolute;
+    top: 70%;
+    left: 33%;
+}
+
+.parrafo{
+    display: grid;
+    position: absolute;
+    top: 123%;
+   
+    justify-items: center;
+    padding: auto;
+    
+}
+
+
+
+
+
+  

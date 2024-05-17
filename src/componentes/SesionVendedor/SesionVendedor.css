@@ -1,0 +1,15 @@
+.btFinca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    margin: 10px;
+}
+
+.imgFinca {
+    display: flex;
+    width: 150px; /* ajusta esto a tus necesidades */
+    height: 150px; /* ajusta esto a tus necesidades */
+}

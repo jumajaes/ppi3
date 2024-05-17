@@ -1,4 +1,4 @@
-[{"id":1,"name":"Waring","image":"http://dummyimage.com/110x100.png/dddddd/000000","categoria":"","precioU":5660,"descripcion":"bio","contacto":"356-966-7163"},
+[{"id":1,"name":"Waring","image":"https://github.com/jumajaes/imgBioprep/blob/main/img.png?raw=true","categoria":"Abono","precioU":5660,"descripcion":"bio","contacto":"3105722207"},
 {"id":2,"name":"Ernaline","image":"http://dummyimage.com/220x100.png/5fa2dd/ffffff","categoria":"","precioU":54227,"descripcion":"preparado de ajo","contacto":"889-989-5778"},
 {"id":3,"name":"Phil","image":"http://dummyimage.com/131x100.png/dddddd/000000","categoria":"","precioU":29682,"descripcion":"composta","contacto":"864-383-2369"},
 {"id":4,"name":"Werner","image":"http://dummyimage.com/200x100.png/5fa2dd/ffffff","categoria":"","precioU":81387,"descripcion":"abono","contacto":"250-664-6387"},
