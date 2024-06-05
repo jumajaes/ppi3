@@ -1,34 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from "./logoBP.png"
 import logoXL from "./logoXL.png"
 import {Link} from "react-router-dom"
 
 import "./head.css"
+import { useData } from '../../contexto/variables'
+
+
 
 export function Head() {
 
-  return (
-    <div >
-    <nav className="head">
-        
 
-      <Link to="/"><img className='imghead' src = {logo} alt = "a"></img></Link>
-      <Link to="/"><img className='XL' src={logoXL} alt="bioPrep"></img></Link>
-       
-        
-       
-        <ul className= "menu">
+  const {BtIniciarSesion, setBtIniciarSesion, usuario} = useData()
+  useEffect(()=>{
+    usuario !== null && setBtIniciarSesion('PERFIL')
+  },[setBtIniciarSesion, usuario])
+
+
+  return (
+
+    
+    <div className="head" >
+
+      <Link to="/" className='imghead'><img className='imgh'  src = {logo} alt = "a"></img></Link>
+      <Link className='XL' to="/"><img className='imgh' src={logoXL} alt="bioPrep"></img></Link>
+      <ul className= "menu">
+          <li><Link className='bt' to="/">Inicio</Link></li>
+          <li><Link className='bt' to="/nosotros">Nosotros</Link></li>
+          <li><Link className='bt' to={BtIniciarSesion==='PERFIL' ? "/usuario": "/sesion"}>{BtIniciarSesion}</Link></li>
           
-          
-            <li><Link className='bt' to="/">Inicio</Link></li>
-            <p></p>
-            <li><Link className='bt' to="/nosotros">Nosotros</Link></li>
-            <p></p>
-            <li><Link className='bt' to="/Sesion">Inicia Sesion</Link></li>
-            <p></p>
-          
-        </ul>
-    </nav>
+      </ul>
+  
     </div>
   );
 }

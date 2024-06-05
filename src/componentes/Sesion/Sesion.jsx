@@ -1,38 +1,36 @@
-import React, { useEffect } from 'react';
-import { Link } from "react-router-dom"
-import "./Sesion.css"
-import { useState } from "react";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useData } from "../../contexto/variables.jsx";
+import "./Sesion.css";
 
-
-export function Sesion() {
-
+export const Sesion = () => {
+  const { iniciarSesion, setUsuario, setBtIniciarSesion } = useData();
+  const navigate = useNavigate();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [validar, setValidar] = useState("");
-  const [ruta, setRuta] = useState("")
 
-  useEffect(()=>{
-    setRuta(validar)
-  },[validar, ruta])
-  
-
-  const manejarClick = () => {
-
-    if(correo === "") {
+  const manejarSubmit = async (e) => {
+    e.preventDefault();
+    if (correo === "") {
       window.alert("Campo correo es obligatorio");
-    } else if(contrasena === "") {
+    } else if (contrasena === "") {
       window.alert("Campo contraseña es obligatorio");
-    } else if(correo === "biocomprador" && contrasena ==="bio") {
-      setValidar("/sesioncomprador");
-    } else if(correo === "biovendedor" && contrasena ==="bio") {
-      setValidar("/sesionvendedor");
     } else {
-      window.alert("Usuario no existe ¡REGISTRATE!");
-      setValidar("/registro");
+      const result = await iniciarSesion(correo, contrasena);
+      if (result.exito) {
+        if (result.usuario) {
+          setUsuario(result.usuario);
+          setBtIniciarSesion("PERFIL")
+          if (result.usuario.rol === 'Vendedor') {
+            navigate('/sesionvendedor');
+          } else if (result.usuario.rol === 'Comprador') {
+            navigate('/usuario');
+          }
+        }
+      } else {
+        window.alert(result.error);
+      }
     }
-
-    setRuta(validar)
-    //setRuta(validar)
   };
 
   const handleCorreoChange = (e) => {
@@ -43,64 +41,135 @@ export function Sesion() {
     setContrasena(e.target.value);
   };
 
-
-
   return (
     <div className="inner-container">
-      <div className="header">
+      <div className="text">
         INICIAR SESION
       </div>
-      <div className="box">
+      <form className="box" onSubmit={manejarSubmit}>
+        <label id="username">Correo Electronico</label>
+        <input
+          autoComplete='username'
+          type="text"
+          name="Correo"
+          className="login-input"
+          placeholder="Correo"
+          value={correo}
+          onChange={handleCorreoChange}
+        />
 
-        <div className="input-group">
-          <label id="username">Correo Electronico</label>
-          <input
-            type="text"
-            name="Correo"
-            className="login-input"
-            placeholder="Correo"
-            value={correo}
-            onChange={handleCorreoChange} />
-        </div>
+        <label id="password">Contraseña</label>
+        <input
+          autoComplete='current-password'
+          type="password"
+          name="contraseña"
+          className="login-input"
+          placeholder="Contraseña"
+          value={contrasena}
+          onChange={handleContrasenaChange}
+        />
 
-        <div className="input-group">
-          <label id="password">Contraseña</label>
-          <input
-            type="contraseña"
-            name="contraseña"
-            className="login-input"
-            placeholder="Contraseña"
-            value={contrasena}
-            onChange={handleContrasenaChange} />
-        </div>
+        <Link className='' to="/olvidopwd">¿Olvidó su contraseña?</Link>
 
-        <div className="OlvidoContrasena">
-          <Link className='btOlvidoContrasena' to="/olvidopwd">¿Olvidó su contraseña?</Link>
-        </div>
-
-        <Link className="btIniciar"
-          onClick={manejarClick}
-          to={ruta}
-        >
+        <button className="Btsesion" type="submit">
           INICIAR
-        </Link>
+        </button>
 
-        <div className="header">
-          <div>
-            ↓ Si no tienes una cuenta. ↓
-          </div>
-
-          <Link className='registro' to="/registro">REGISTRARSE</Link>
-
-        </div>
-      </div>
-
-
-
-
-
+        <h1 className='text'>
+          ↓ Si no tienes una cuenta. ↓
+        </h1>
+        <Link className='Btsesion' to="/registro">REGISTRARSE</Link>
+      </form>
     </div>
   );
 }
 
 export default Sesion;
+
+// import React, { useState } from 'react';
+// import { Link, useNavigate } from "react-router-dom";
+// import { useData } from "../../contexto/variables.jsx";
+// import "./Sesion.css";
+
+// export const Sesion = ()=> {
+//   const { iniciarSesion, setUsuario } = useData();
+//   const navigate = useNavigate();
+//   const [correo, setCorreo] = useState('');
+//   const [contrasena, setContrasena] = useState('');
+
+
+//   const manejarClick = async () => {
+//     if (correo === "") {
+//       window.alert("Campo correo es obligatorio");
+//     } else if (contrasena === "") {
+//       window.alert("Campo contraseña es obligatorio");
+//     } else {
+//       const result = await iniciarSesion(correo, contrasena);
+//       if (result.exito) {
+//         if (result.usuario) {
+//           // Si el usuario está autenticado y tiene un rol de vendedor, lo redirigimos a la sesión de vendedor
+//           if (result.usuario.rol === 'Vendedor') {
+//             navigate('/sesionvendedor');
+//           }
+//           // Si el usuario está autenticado y tiene un rol de comprador, lo redirigimos a la página de sesión personalizada
+//           else if (result.usuario.rol === 'Comprador') {
+//             navigate('/usuario');
+//           }
+//         }
+//         setUsuario(result.usuario)
+//         window.alert(result.usuario);
+//       } else {
+//         window.alert(result.error);
+//       }
+//     }
+//   };
+
+//   const handleCorreoChange = (e) => {
+//     setCorreo(e.target.value);
+//   };
+
+//   const handleContrasenaChange = (e) => {
+//     setContrasena(e.target.value);
+//   };
+
+//   return (
+//     <div className="inner-container">
+//       <div className="text">
+//         INICIAR SESION
+//       </div>
+//       <div className="box">
+//         <label id="username">Correo Electronico</label>
+//         <input
+//           type="text"
+//           name="Correo"
+//           className="login-input"
+//           placeholder="Correo"
+//           value={correo}
+//           onChange={handleCorreoChange} />
+
+//         <label id="password">Contraseña</label>
+//         <input
+//           autoComplete='current-password'
+          
+//           name="contraseña"
+//           className="login-input"
+//           placeholder="Contraseña"
+//           value={contrasena}
+//           onChange={handleContrasenaChange} />
+
+//         <Link className='' to="/olvidopwd">¿Olvidó su contraseña?</Link>
+
+//         <button className="Btsesion" onClick={manejarClick}>
+//           INICIAR
+//         </button>
+
+//         <h1 className='text'>
+//           ↓ Si no tienes una cuenta. ↓
+//         </h1>
+//         <Link className='Btsesion' to="/registro">REGISTRARSE</Link>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Sesion;

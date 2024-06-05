@@ -1,5 +1,5 @@
 import {Homeppal} from "./componentes/homebioprep/Homeppal.jsx";
-import "./App.css";
+
 import {Head} from "./componentes/headboard/head.jsx";
 import {Nosotros} from "./componentes/nosotros/Nosotros"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -10,10 +10,14 @@ import { OlvidoPasswd } from "./componentes/olvidoPasswd/OlvidoPasswd.jsx";
 import SesionVendedor from "./componentes/SesionVendedor/SesionVendedor.jsx";
 import Finca from "./componentes/SesionVendedor/Finca/Finca.jsx";
 
+import { DataProvider } from './contexto/variables.jsx'
+import Usuario from "./componentes/SesionComprador/Usuario.jsx";
+import Carrito from "./componentes/SesionComprador/Carrito.jsx";
+
 function App() {
 
   return (
-      <div>
+      <DataProvider>
         <BrowserRouter>
           <div className="App">
             <Head/>
@@ -25,11 +29,12 @@ function App() {
             <Route path="/registro" element={<Registro></Registro>}/>
             <Route path="/olvidopwd" element={<OlvidoPasswd></OlvidoPasswd>}/>
             <Route path="/sesionvendedor" element={<SesionVendedor></SesionVendedor>}/>
-            <Route path="/finca" element={<Finca></Finca>}/>
-            <Route path="/sesioncomprador" element={<Homeppal onSesion={true}></Homeppal>}/>
-            </Routes> 
+            <Route path="/finca/:idFinca" element={<Finca></Finca>}/>
+            <Route path="/usuario" element={<Usuario/>}/>
+            <Route path="/carrito" element={<Carrito></Carrito>}/>
+            </Routes>  
         </BrowserRouter> 
-    </div>
+    </DataProvider>
 
   );
 }
