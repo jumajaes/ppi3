@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://3167jpp0-5000.use2.devtunnels.ms';
 
 const APIUrls = {
   USUARIOS_URL: `${API_URL}/usuarios`,

@@ -6,7 +6,7 @@ import OpwdImg from "./OpwdImg.png"
 export function OlvidoPasswd() {
     return (
 
-        <div className='ppal'>
+        <div className='olvidopass'>
             <img className='imgopwd' src={OpwdImg} alt="opwd"></img>
             <div class="container">
                 

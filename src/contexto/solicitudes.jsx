@@ -14,32 +14,33 @@ const obtenerProductos = async () => {
 
 
 const registrarUsuario = async (nuevoUsuario) => {
-  try {
-    const response = await fetch(APIUrls.REGISTRAR_USUARIO_URL, {
+  console.log(nuevoUsuario)
+  const response = await fetch('https://3167jpp0-5000.use2.devtunnels.ms/registrar-usuario', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
       },
       body: JSON.stringify(nuevoUsuario),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error al registrar usuario:', error);
-    throw error;
+  });
+
+  if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
   }
-};
+
+  const data = await response.json();
+  return data;
+}
 
 const iniciarSesion = async (email, password) => {
   try {
-    const response = await fetch(APIUrls.INICIAR_SESION, {
+    const response = await fetch('https://3167jpp0-5000.use2.devtunnels.ms/iniciar-sesion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
-
+    console.log(response)
     if (response.ok) {
       const data = await response.json();
       return { exito: true, mensaje: data.mensaje, usuario: data.usuario };
@@ -69,21 +70,6 @@ const actualizarDatosUsuario = async (datosUsuario) => {
     return { exito: false, error: 'Error de red' };
   }
 };
-
-
-// Obtener productos del carrito para un usuario específico
-// const obtenerProductosCarrito = async (idUsuario) => {
-//   try {
-//     const response = await fetch(`${APIUrls}/carrito/${idUsuario}`, {
-//       method: 'GET',
-//     });
-//     const productosCarrito = await response.json();
-//     return productosCarrito;
-//   } catch (error) {
-//     console.error('Error al obtener productos del carrito:', error);
-//     return { exito: false, error: 'Error de red' };
-//   }
-// };
 
 
 export { iniciarSesion, obtenerProductos, registrarUsuario, actualizarDatosUsuario};

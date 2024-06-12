@@ -8,6 +8,7 @@ import pyodbc
 app = Flask('__name__')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+
 @app.route('/productos')
 def productos():
     return json.dumps(sentencias.obtener_productos(), indent=4)
@@ -41,29 +42,31 @@ def editar_producto_endpoint(producto_id):
 def registrar_usuario():
     datos_usuario = request.json
     
-    # Verificar si la cédula ya existe en la base de datos
+    
     if sentencias.verificar_existencia_cedula(datos_usuario['cedula']):
         return jsonify({"error": "La cédula ya está registrada, Solicita recuperar contraseña"}), 400
     
-    # Verificar si el correo electrónico ya existe en la base de datos
+   
     if sentencias.verificar_existencia_correo(datos_usuario['email']):
         return jsonify({"error": "El correo electrónico ya está registrado. Solicita recuperar contraseña"}), 400
     
-    # Verificar si el teléfono ya existe en la base de datos
+   
     if sentencias.verificar_existencia_telefono(datos_usuario['telefono']):
         return jsonify({"error": "El teléfono ya está registrado, Solicita recuperar contraseña"}), 400
     
     try:
+        print(datos_usuario)
+        
         exito = sentencias.crear_usuario(
             datos_usuario['cedula'],
             datos_usuario['nombre'],
             datos_usuario['apellido'],
-            datos_usuario['edad'],
-            datos_usuario['email'],
             datos_usuario['telefono'],
-            datos_usuario['direccion'],
+            datos_usuario['email'],
             datos_usuario['rol'],
-            datos_usuario['password']  # Aquí se asegura de pasar 'password' correctamente
+            datos_usuario['edad'],
+            datos_usuario['direccion'],
+            datos_usuario['password']
         )
         if exito:
             return jsonify({"mensaje": "Usuario registrado correctamente"}), 200
@@ -81,11 +84,11 @@ def iniciar_sesion():
     email = datos_login.get('email')
     password = datos_login.get('password')
     
-    
+    print(datos_login)
     if email:
         if sentencias.verificar_existencia_correo(email):
             usuario = sentencias.obtener_usuario_por_correo(email)
-            print(email,password, usuario['password'])
+            print(usuario)
             if usuario and sentencias.verificar_contrasena(usuario['password'], password):
                 return jsonify({"exito": True, "mensaje": "Inicio de sesión exitoso", "usuario": usuario}), 200
             else:
@@ -113,10 +116,18 @@ def obtener_fincas_usuario():
         id_usuario = int(id_usuario_str)
     except ValueError:
         return {"exito": False, "error": "El ID del usuario debe ser un número entero"}
-
+    print(id_usuario)
     resultado = sentencias.obtener_fincas_usuario(id_usuario)
     print(resultado)
     return jsonify(resultado)
+
+@app.route('/obtener_nombrefincas', methods=['GET'])
+def obtener_nombrefincas():
+    id_usuario_str = request.args.get('id_usuario')
+    resultado = sentencias.obtener_nombrefincas(id_usuario_str)
+    print(resultado['tel'])
+    resultado['tel']
+    return resultado['tel']
 
 
 @app.route('/agregar_finca', methods=['POST'])

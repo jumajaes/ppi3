@@ -9,14 +9,14 @@ def conectar():
         return None
 
 
-def crear_usuario(cedula, nombre, apellido, edad, email, telefono, direccion, rol, password):
+def crear_usuario(cedula, nombre, apellido, telefono, email, rol, edad, direccion, password ):
     try:
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
             cursor.execute(
-                'INSERT INTO usuarios (cedula, nombre, apellido, edad, email, telefono, direccion, rol, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                (cedula, nombre, apellido, edad, email, telefono, direccion, rol, password)
+                'INSERT INTO usuarios (cedula, nombre, apellido, telefono, email, rol, edad, direccion, password ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (cedula, nombre, apellido, telefono, email, rol, edad, direccion, password )
             )
             conexion.commit()
             return True
@@ -30,30 +30,32 @@ def crear_usuario(cedula, nombre, apellido, edad, email, telefono, direccion, ro
 
 def actualizar_datos_usuario(datos_usuario):
     try:
-        # Conexión a la base de datos
-        conn = conectar()
-        cursor = conn.cursor()
+        print(datos_usuario)
+        conexion = conectar()
 
-        # Actualizar los datos del usuario en la tabla correspondiente
-        cursor.execute(f"UPDATE usuarios SET nombre = '{datos_usuario['nombre']}', "
-         f"apellido = '{datos_usuario['apellido']}', "
-         f"edad = {datos_usuario['edad']}, "
-         f"telefono = {datos_usuario['telefono']}, "
-         f"email = '{datos_usuario['email']}', "
-         f"direccion = '{datos_usuario['direccion']}', "
-         f"password = {datos_usuario['password']} "
-         f"WHERE id = {datos_usuario['id']};")
+        cursor = conexion.cursor()
+        if 'oldPassword' in datos_usuario:
+            cursor.execute("""
+                UPDATE usuarios 
+                SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?, password = ?
+                WHERE id = ?;
+            """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['password'], datos_usuario['id']))
+        else:
+            cursor.execute("""
+                UPDATE usuarios 
+                SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?
+                WHERE id = ?;
+            """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['id']))
 
-        # Confirmar la transacción y cerrar la conexión
-        conn.commit()
-    
-        conn.close()
+        conexion.commit()
+        return {"exito": True, "mensaje": "Datos actualizados correctamente"}
 
-        # Devolver un mensaje de éxito u otra respuesta deseada
-        return {'mensaje': 'Los datos del usuario han sido actualizados correctamente'}
-    except Exception as e:
-        # Manejar cualquier excepción que pueda ocurrir durante el proceso de actualización
-        return {'error': str(e)}
+    except Exception as ex:
+        print("Error al actualizar datos del usuario:", ex)
+        return {"exito": False, "error": "Error al actualizar datos del usuario"}
+
+    finally:
+            conexion.close()
 
 
 #____________________________________________________________________________
@@ -155,19 +157,7 @@ def actualizar_producto_por_id(producto_id, producto):
         return True, None
     except Exception as e:
         return False, str(e)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 #----------------------------------------------------------------------------------
 def verificar_existencia_correo(email):
     try:
@@ -253,10 +243,10 @@ def obtener_usuario_por_correo(email):
                 'apellido': usuario_row[3],
                 'telefono': usuario_row[4],
                 'email': usuario_row[5],
-                'password': usuario_row[6],
-                'rol': usuario_row[7],
-                'edad': usuario_row[8],
-                'direccion': usuario_row[9]
+                'password': usuario_row[9],
+                'rol': usuario_row[6],
+                'edad': usuario_row[7],
+                'direccion': usuario_row[8]
             }
             return usuario  # Devolvemos el usuario encontrado
 
@@ -278,34 +268,7 @@ def verificar_contrasena(password_bd, password_ingresada):
     return password_bd == password_ingresada
 
 
-def actualizar_datos_usuario(datos_usuario):
-    try:
-        conexion = conectar()
 
-        cursor = conexion.cursor()
-        if 'nueva_contrasena' in datos_usuario:
-            cursor.execute("""
-                UPDATE usuarios 
-                SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?, password = ?
-                WHERE id = ?;
-            """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['nueva_contrasena'], datos_usuario['id']))
-        else:
-            cursor.execute("""
-                UPDATE usuarios 
-                SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?
-                WHERE id = ?;
-            """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['id']))
-
-        conexion.commit()
-        return {"exito": True, "mensaje": "Datos actualizados correctamente"}
-
-    except Exception as ex:
-        print("Error al actualizar datos del usuario:", ex)
-        return {"exito": False, "error": "Error al actualizar datos del usuario"}
-
-    finally:
-        if 'conexion' in locals():
-            conexion.close()
             
             
             
@@ -369,7 +332,7 @@ def obtener_fincas_usuario(id_usuario):
         cursor.execute("""
             SELECT * FROM Fincas
             WHERE IDDueño = ?
-        """, (id_usuario,))
+        """, (id_usuario))
 
         # Obtiene los nombres de las columnas
         columnas = [columna[0] for columna in cursor.description]
@@ -391,3 +354,66 @@ def obtener_fincas_usuario(id_usuario):
         if 'conexion' in locals():
             conexion.close()
 
+def obtener_nombrefincas(id):
+    try:
+        
+        conexion = conectar()
+
+        cursor = conexion.cursor()
+        cursor.execute("""
+            SELECT * FROM Fincas
+            WHERE ID = ?
+        """, (id))
+        
+
+
+        # Obtiene las filas como tuplas
+        filasx = cursor.fetchall()
+        def tuple_to_list_of_lists(tup):
+             return [list(tup[0])]
+        
+        filas = tuple_to_list_of_lists(filasx)
+        
+        dueño =  obtener_telefonodueño(filas[0][1])
+        
+        
+        
+        return {"exito": True, "tel": dueño['fincas'][0][4]}
+        
+    except Exception as ex:
+        print("Error al obtener las fincas del usuario:", ex)
+        return {"exito": False, "error": "Error al obtener las fincas del usuario"}
+
+    finally:
+        if 'conexion' in locals():
+            conexion.close()
+            
+def obtener_telefonodueño(id):
+    try:
+        
+        conexion = conectar()
+
+        cursor = conexion.cursor()
+        cursor.execute("""
+            SELECT * FROM usuarios
+            WHERE id = ?
+        """, (id))
+        
+
+
+        # Obtiene las filas como tuplas
+        filasx = cursor.fetchall()
+        def tuple_to_list_of_lists(tup):
+             return [list(tup[0])]
+        
+        filas = tuple_to_list_of_lists(filasx)
+        
+        return {"exito": True, "fincas": filas}
+        
+    except Exception as ex:
+        print("Error al obtener las fincas del usuario:", ex)
+        return {"exito": False, "error": "Error al obtener las fincas del usuario"}
+
+    finally:
+        if 'conexion' in locals():
+            conexion.close()

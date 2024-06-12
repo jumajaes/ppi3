@@ -9,18 +9,14 @@ export function Nosotros() {
   return (
     <div className="nosotros">
 
+      <Link to="/"><img  className="imgnosotros" src={logo} alt="logo" ></img></Link>
+      <Link to="/"><img className="imgnosotros" src={logoXL} alt="bioPrep"></img></Link>
+      <hr width="90%" />
+      <h1 className="">Somos...</h1>
+      <p className="parrafonosotros">
+        Una pagina Web dedicada a la gestión y promoción de productos biopreparados en el área metropolitana de Medellín.
+      </p>
 
-
-      <Link to="/"><img className="imgNosotros" src={logo} alt="logo" ></img></Link>
-      <Link to="/"><img className="imgNosotros" src={logoXL} alt="bioPrep"></img></Link>
-      <hr width="100%"/>
-      
-      <div className="parrafo">
-        <h1 className="">Somos...</h1>
-        <p>
-          Una pagina Web dedicada a la gestión y promoción de productos biopreparados en el área metropolitana de Medellín.
-        </p>
-      </div>
     </div>
   );
 }

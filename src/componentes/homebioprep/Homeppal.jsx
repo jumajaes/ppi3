@@ -3,6 +3,7 @@ import "./Homeppal.css";
 import { Producto } from "../Producto/Producto.jsx";
 import { useData } from "../../contexto/variables.jsx";
 import { useNavigate } from "react-router-dom";
+import iconocarrito from './iconocarrito.jpg'
 
 export const Homeppal = () => {
   const { obtenerProductos, usuario } = useData(); // Obtiene la función obtenerProductos del contexto
@@ -11,12 +12,12 @@ export const Homeppal = () => {
   const [value, setValue] = useState(""); // Inicializa el estado de value como una cadena vacía
   const [categoria, setCategoria] = useState(""); // Inicializa el estado de categoria como una cadena vacía
   const [filteredProducts, setFilteredProducts] = useState([]); // Inicializa el estado de productos filtrados
-  const x = ()=>{
+  const x = () => {
     console.log(usuario)
     usuario === null && alert('Debes iniciar sesion')
     usuario !== null ? navigate('/carrito') : navigate('/')
-    
-}
+
+  }
   useEffect(() => {
     // Utiliza la función obtenerProductos para obtener los productos de la API
     obtenerProductos()
@@ -48,45 +49,60 @@ export const Homeppal = () => {
   };
 
   return (
-    <div className="ppal">
+    <div className="Homeppal">
 
-      <div className="input-group-busquedaHomeppal">
-        <label id="busqueda">Buscar producto</label>
-        <input
-          type="text"
-          name="busqueda"
-          className="busquedaHomeppal"
-          placeholder="Ingrese nombre"
-          value={value}
-          onChange={filtrarNombre}
-        />
+      
+      VER CARRITO
+
+      <button className="buttonsHomeppal" onClick={x}>
+        <img className='logocarrito' src={iconocarrito} alt=""></img>
+      </button>
+
+      <hr className="hr" />
+      <div className="busquedaHomeppal">
+
+
+        <div className="buscarNombreHomeppal">
+          <input
+            type="text"
+            name="busqueda"
+            className="buttonsHomeppal"
+            placeholder="Ingrese nombre para buscar"
+            value={value}
+            onChange={filtrarNombre}
+          />
+        </div>
+
+
+
+        <div>
+
+          <select name="categorias" value={categoria} className="buttonsHomeppal" onChange={filtrarCategoria}>
+            <option value="">Selecciona una categoria</option>
+            <option value="1">Abono</option>
+            <option value="2">Fertilizante</option>
+            <option value="3">Fungicida</option>
+            <option value="4">Plaguicida</option>
+            <option value="5">Herbicida</option>
+            <option value="6">Nutridor</option>
+            <option value="7">Hidratante</option>
+            <option value="8">Calcio</option>
+          </select>
+
+        </div>
+
+
+
       </div>
 
-      <button onClick={x}>
-             VER CARRITO
-            </button>
 
-      <label className="input-group-busquedaHomeppal">
-        Filtrar categoría:
-        <select name="categorias" value={categoria} onChange={filtrarCategoria}>
-          <option value="">Selecciona una categoria / Ninguna...</option>
-          <option value="1">Abono</option>
-          <option value="2">Fertilizante</option>
-          <option value="3">Fungicida</option>
-          <option value="4">Plaguicida</option>
-          <option value="5">Herbicida</option>
-          <option value="6">Nutridor</option>
-          <option value="7">Hidratante</option>
-          <option value="8">Calcio</option>
-        </select>
-      </label>
-
-      <div className="Homeppal">
+      <div className="gridpructo">
         {filteredProducts.length > 0 &&
           filteredProducts.map((producto) => (
-            <Producto key={producto.id} producto={producto} />
+            <Producto key={producto.id} producto={producto} llavecarrito={false}/>
           ))}
       </div>
+
     </div>
   );
 }

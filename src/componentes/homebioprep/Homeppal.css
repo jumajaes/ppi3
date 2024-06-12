@@ -1,97 +1,104 @@
-.ppal{
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  gap: 30px;
-}
-
-.product-imageHomeppal{
-  border-radius: 20%;  
-  width: 290px;
-  height: 400px;
-}
 .Homeppal{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 50px;
-  padding: 20px 20px;
-  background-color: rgb(255, 255, 255);
-  
-}
 
-.ocultoHomeppal{
-  display: none;
-}
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
 
-.fondoHomeppal:hover {
-  transform: scale(1.1); /* Aumenta la escala al pasar el cursor */
 }
 
 
-.fondoHomeppal{
-  display: grid;
-  grid-template-rows: 1fr;
-  justify-items: center;
-  overflow: hidden;
-  text-align: center;
-  transition: transform 0.3s ease; /* Transición de escala */
-  background-color:rgb(227, 245, 216);
-  padding: 20px 0;
-  border-radius: 20%;    
+.hr{
+    min-width: 90%;
+}
+.logocarrito{
+
+    max-height: 80px;
+    max-width: 80px;
+    background-color: #ffffff;
+    border-radius: 24px;
 }
 
-.input-group-busquedaHomeppal{
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  justify-items: center;
-  text-align: center;
-  
-}
-
-
-@media (max-width: 1100px)  {
-  .product-imageHomeppal{
-    width: 250px;
-    height: 360px;
-  }
-  .Homeppal{
-   
+.busquedaHomeppal{
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 10px 10px;
-  }
-  .fondoHomeppal:hover {
-    transform: scale(1.0); }
+    justify-content: center;
+    margin: 5px;
+    padding: 10px;
+    
 }
 
-@media (max-width: 800px)  {
-  .product-imageHomeppal{
-    width: 260px;
-    height: 370px;
-  }
-  .HomeppalHomeppal{
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 15px 15px;
-  }
-
-  .fondoHomeppal:hover {
-    transform: none
-  }
+.gridpructo{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
 }
 
 
-.btContactoHomeppal {
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(0, 0, 0);
-  width: 150px; /* Ajusta el ancho según tus necesidades */
-  height: 60px; /* Ajusta la altura según tus necesidades */
-  border-radius: 24px;
+.buttonsHomeppal{
+  display: inline-block;
+  margin: 20px;
+  padding: 12px;
+  font-size: 16px;
   font-weight: bold;
-  color: rgb(0, 0, 0); /* Cambia el color del texto si es necesario */
-  transition: background-color 0.3s ease; /* Transición de color */
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  border: 5px;
+  border-radius: 5px;
+  background-color: #64db6a;
+  color: white;
+  transition: background-color 0.3s ease;
+  max-width: 270px;
 }
 
-.btContactoHomeppal:hover {
-  background: palegreen; /* Color al pasar el cursor */
+.labelBuqueda{
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+@media (max-width: 1100px) {
+    .gridpructo{
+        
+        grid-template-columns: 1fr 1fr 1fr;
+        
+    }
+
+}
+
+
+@media (max-width: 900px) {
+    .busquedaHomeppal{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        justify-items: center;
+        margin: 5px;
+        padding: 10px;
+        
+    }
+
+    .gridpructo{
+        
+        grid-template-columns: 1fr 1fr;
+        
+    }
+
+}
+
+@media (max-width: 580px) {
+    .busquedaHomeppal{
+        gap: 10px;
+        
+    }
+
+    .gridpructo{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
 }

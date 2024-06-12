@@ -23,7 +23,7 @@ export function Head() {
     <div className="head" >
 
       <Link to="/" className='imghead'><img className='imgh'  src = {logo} alt = "a"></img></Link>
-      <Link className='XL' to="/"><img className='imgh' src={logoXL} alt="bioPrep"></img></Link>
+      <Link className='XL' to="/"><img className='XL' src={logoXL} alt="bioPrep"></img></Link>
       <ul className= "menu">
           <li><Link className='bt' to="/">Inicio</Link></li>
           <li><Link className='bt' to="/nosotros">Nosotros</Link></li>
