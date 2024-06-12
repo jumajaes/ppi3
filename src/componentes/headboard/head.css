@@ -52,12 +52,10 @@
 }
 
 
-/*----------------------------------------------------------------------*/
-
 .XL:hover {
 
     transform: scale(1.3);
-    /* Aumenta la escala al pasar el cursor */
+
 }
 
 .imghead:hover {
@@ -66,14 +64,10 @@
 
 .bt:hover {
     background: palegreen;
-    /* Color al pasar el cursor */
     transform: scale(1.1);
-    /* Aumenta la escala al pasar el cursor */
 }
 
 
-
-/*----------------------------------------------------------------------*/
 @media (max-width: 800px) {
     .head {
         grid-template-columns: 1fr;

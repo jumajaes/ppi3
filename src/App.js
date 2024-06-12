@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {Sesion} from "./componentes/Sesion/Sesion.jsx";
 import {Registro} from "./componentes/registrobioprep/Registro"
 import { OlvidoPasswd } from "./componentes/olvidoPasswd/OlvidoPasswd.jsx";
-//import SesionComprador from "./componentes/SesionComprador/SesionComprador.jsx";
 import SesionVendedor from "./componentes/SesionVendedor/SesionVendedor.jsx";
 import Finca from "./componentes/SesionVendedor/Finca/Finca.jsx";
 

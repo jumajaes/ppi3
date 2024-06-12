@@ -8,31 +8,6 @@ export const Carrito = () => {
     const [productosCarrito, setProductosCarrito] = useState([]);
     const [productos, setProductos] = useState([]);
 
-   
-
-// const nombrefincas = async(id)=>{
-//     try {
-//         console.log(id)
-//         const response = await fetch(`/obtener_fincas_usuario/${id}`, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-        
-//         if (!response.ok) {
-//             throw new Error('Error al obtener productos del carrito');
-//         }
-        
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error('Error al obtener productos:', error);
-//         return [];
-//     }
-
-// }
-
     const obtenerProductosCarrito = async (usuario) => {
         try {
             const response = await fetch(`/obtener-productos-carrito/${usuario.id}`, {

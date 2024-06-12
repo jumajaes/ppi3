@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import iconocarrito from './iconocarrito.jpg'
 
 export const Homeppal = () => {
-  const { obtenerProductos, usuario } = useData(); // Obtiene la función obtenerProductos del contexto
+  const { obtenerProductos, usuario } = useData(); 
   const navigate = useNavigate();
-  const [productos, setProductos] = useState([]); // Inicializa el estado de productos como un array vacío
-  const [value, setValue] = useState(""); // Inicializa el estado de value como una cadena vacía
-  const [categoria, setCategoria] = useState(""); // Inicializa el estado de categoria como una cadena vacía
-  const [filteredProducts, setFilteredProducts] = useState([]); // Inicializa el estado de productos filtrados
+  const [productos, setProductos] = useState([]);
+  const [value, setValue] = useState(""); 
+  const [categoria, setCategoria] = useState(""); 
+  const [filteredProducts, setFilteredProducts] = useState([]); 
   const x = () => {
     console.log(usuario)
     usuario === null && alert('Debes iniciar sesion')
@@ -19,19 +19,19 @@ export const Homeppal = () => {
 
   }
   useEffect(() => {
-    // Utiliza la función obtenerProductos para obtener los productos de la API
+   
     obtenerProductos()
       .then((resolucion) => {
         setProductos(resolucion);
-        setFilteredProducts(resolucion); // Inicializa los productos filtrados con todos los productos
+        setFilteredProducts(resolucion); 
       })
       .catch((error) => {
         console.error('Error al obtener productos:', error);
       });
-  }, [obtenerProductos]); // El efecto se ejecutará solo una vez al montar el componente
+  }, [obtenerProductos]); 
 
   useEffect(() => {
-    // Filtra los productos en base al valor de búsqueda y la categoría seleccionada
+   
     const filtered = productos.filter((producto) => {
       const matchesSearch = producto.nombre.toLowerCase().includes(value.toLowerCase());
       const matchesCategory = categoria === "" || producto.categoria_id === parseInt(categoria);
@@ -41,11 +41,11 @@ export const Homeppal = () => {
   }, [value, categoria, productos]);
 
   const filtrarNombre = (e) => {
-    setValue(e.target.value); // Actualiza el estado value con el valor del input de búsqueda
+    setValue(e.target.value);
   };
 
   const filtrarCategoria = (e) => {
-    setCategoria(e.target.value); // Actualiza el estado categoria con el valor del select de categorías
+    setCategoria(e.target.value); 
   };
 
   return (

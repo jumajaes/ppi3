@@ -57,9 +57,6 @@ def actualizar_datos_usuario(datos_usuario):
     finally:
             conexion.close()
 
-
-#____________________________________________________________________________
-
 def obtener_productos():
     json_productos = []
     try:
@@ -120,10 +117,8 @@ def eliminar_producto_por_id(id):
 
         cursor = conexion.cursor()
         
-        # Ejecutar la sentencia SQL para eliminar el producto
         cursor.execute("DELETE FROM productos WHERE id = ?", id)
         
-        # Confirmar la transacción y cerrar el cursor
         conexion.commit()
         cursor.close()
         
@@ -141,16 +136,14 @@ def actualizar_producto_por_id(producto_id, producto):
 
         cursor = conexion.cursor()
         
-        # Ejecutar la sentencia SQL para eliminar el producto
         conexion = conectar()
 
         cursor = conexion.cursor()
         
-        # Ejecutar la sentencia SQL para eliminar el producto
         cursor.execute("UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, descripcion = ?, img = ? WHERE IDFinca = ? AND id = ?", 
         (producto['Nombre'], int(producto['Precio']), producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id))
 
-        # Confirmar la transacción y cerrar el cursor
+        
         conexion.commit()
         cursor.close()
         
@@ -158,7 +151,7 @@ def actualizar_producto_por_id(producto_id, producto):
     except Exception as e:
         return False, str(e)
 
-#----------------------------------------------------------------------------------
+
 def verificar_existencia_correo(email):
     try:
         conexion = conectar()
@@ -232,10 +225,10 @@ def obtener_usuario_por_correo(email):
 
         cursor = conexion.cursor()
         cursor.execute("SELECT * FROM usuarios WHERE email = ?", (email,))
-        usuario_row = cursor.fetchone()  # Obtenemos la primera fila del resultado
+        usuario_row = cursor.fetchone()  
 
         if usuario_row:
-            # Convertir la fila del usuario en un diccionario
+           
             usuario = {
                 'id': usuario_row[0],
                 'cedula': usuario_row[1],
@@ -248,10 +241,10 @@ def obtener_usuario_por_correo(email):
                 'edad': usuario_row[7],
                 'direccion': usuario_row[8]
             }
-            return usuario  # Devolvemos el usuario encontrado
+            return usuario  
 
         else:
-            return None  # No se encontró ningún usuario con el correo electrónico dado
+            return None 
 
     except Exception as ex:
         print("Error al obtener usuario por correo:", ex)
@@ -259,7 +252,7 @@ def obtener_usuario_por_correo(email):
 
     finally:
         if 'conexion' in locals():
-            conexion.close()  # Cerramos la conexión
+            conexion.close() 
 
 
 
@@ -267,20 +260,6 @@ def verificar_contrasena(password_bd, password_ingresada):
    
     return password_bd == password_ingresada
 
-
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-#____________________________________________________________
 def agregar_finca(id_usuario, nombre_finca):
     try:
         conexion = conectar()
@@ -334,13 +313,10 @@ def obtener_fincas_usuario(id_usuario):
             WHERE IDDueño = ?
         """, (id_usuario))
 
-        # Obtiene los nombres de las columnas
         columnas = [columna[0] for columna in cursor.description]
 
-        # Obtiene las filas como tuplas
         filas = cursor.fetchall()
 
-        # Convierte cada fila en un objeto
         fincas = [dict(zip(columnas, fila)) for fila in filas]
 
         print(fincas)
@@ -365,9 +341,6 @@ def obtener_nombrefincas(id):
             WHERE ID = ?
         """, (id))
         
-
-
-        # Obtiene las filas como tuplas
         filasx = cursor.fetchall()
         def tuple_to_list_of_lists(tup):
              return [list(tup[0])]
@@ -399,9 +372,6 @@ def obtener_telefonodueño(id):
             WHERE id = ?
         """, (id))
         
-
-
-        # Obtiene las filas como tuplas
         filasx = cursor.fetchall()
         def tuple_to_list_of_lists(tup):
              return [list(tup[0])]

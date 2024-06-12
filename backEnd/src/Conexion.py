@@ -37,7 +37,7 @@ def editar_producto_endpoint(producto_id):
     else:
         return jsonify({"error": f"No se pudo actualizar el producto: {error}"}), 500
 
-#---------------------------------------------------------------------------
+
 @app.route('/registrar-usuario', methods=['POST'])
 def registrar_usuario():
     datos_usuario = request.json
@@ -75,7 +75,7 @@ def registrar_usuario():
     except Exception as ex:
         print("Error al registrar usuario:", ex)
         return jsonify({"error": "Ha ocurrido un error al registrar el usuario. Por favor, inténtalo nuevamente."}), 500
-#---------------------------------------------------------------------------
+
 
 @app.route('/iniciar-sesion', methods=['POST'])
 def iniciar_sesion():
@@ -103,9 +103,9 @@ def actualizar_usuario():
     datos_usuario = request.json
     print(datos_usuario)
     resultado = sentencias.actualizar_datos_usuario(datos_usuario)
-    #print(resultado)
+   
     return jsonify(resultado)
-#---------------------------------------------------------------------------
+
 
 @app.route('/obtener_fincas_usuario', methods=['GET'])
 def obtener_fincas_usuario():
@@ -153,7 +153,7 @@ def eliminar_finca():
     return jsonify(resultado)
 
 
-#_______________________________________________----------------
+
 
 def conectar():
     try:
@@ -163,19 +163,19 @@ def conectar():
         print("Error de conexión:", ex)
         return None
 
-# Ruta para obtener todos los productos de un usuario específico en el carrito
+
 @app.route('/obtener-productos-carrito/<int:id_usuario>', methods=['GET'])
 def obtener_productos_carrito(id_usuario):
     try:
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
-            # Consultar la base de datos para obtener los productos en el carrito del usuario
+           
             cursor.execute("SELECT * FROM Carrito WHERE IDUsuario=?", (id_usuario,))
             productos_carrito = cursor.fetchall()
-            # Convertir los resultados a un formato serializable
+           
             productos_carrito = [dict(zip([column[0] for column in cursor.description], row)) for row in productos_carrito]
-            # Cerrar la conexión y devolver los productos como respuesta en formato JSON
+            
             conexion.close()
             return jsonify(productos_carrito)
         else:
@@ -183,11 +183,10 @@ def obtener_productos_carrito(id_usuario):
     except Exception as e:
         return jsonify({"error": str(e)})
 
-# Ruta para agregar un producto al carrito de un usuario
+
 @app.route('/agregar-producto-carrito', methods=['POST'])
 def agregar_producto_carrito():
     try:
-        # Obtener los datos del producto a agregar desde la solicitud POST
         datos_producto = request.json
         id_usuario = datos_producto['IDUsuario']
         id_producto = datos_producto['IDProducto']
@@ -195,10 +194,8 @@ def agregar_producto_carrito():
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
-            # Insertar el producto en el carrito del usuario en la base de datos
             cursor.execute("INSERT INTO Carrito (IDUsuario, IDProducto) VALUES (?, ?)", (id_usuario, id_producto))
             conexion.commit()
-            # Cerrar la conexión y devolver la confirmación de agregación
             conexion.close()
             return jsonify({"mensaje": "Producto agregado al carrito correctamente"})
         else:
@@ -206,17 +203,14 @@ def agregar_producto_carrito():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-# Ruta para eliminar un producto del carrito de un usuario
 @app.route('/eliminar-producto-carrito/<int:id_usuario>/<int:id_producto>', methods=['DELETE'])
 def eliminar_producto_carrito(id_usuario, id_producto):
     try:
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
-            # Eliminar el producto del carrito del usuario en la base de datos
             cursor.execute("DELETE FROM Carrito WHERE IDUsuario=? AND IDProducto=?", (id_usuario, id_producto))
             conexion.commit()
-            # Cerrar la conexión y devolver la confirmación de eliminación
             conexion.close()
             return jsonify({"mensaje": "Producto eliminado del carrito correctamente"})
         else:
@@ -224,6 +218,5 @@ def eliminar_producto_carrito(id_usuario, id_producto):
     except Exception as e:
         return jsonify({"error": str(e)})
 
-#--------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)

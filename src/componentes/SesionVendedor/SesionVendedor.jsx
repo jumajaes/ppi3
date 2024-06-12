@@ -10,8 +10,7 @@ export function SesionVendedor() {
     const {usuario} = useData()
     console.log(usuario)
 
-    const idUsuario = usuario.id; // Asegúrate de tener el ID del usuario aquí
-
+    const idUsuario = usuario.id;
     const obtenerFincas = () => {
         fetch(`https://3167jpp0-5000.use2.devtunnels.ms/obtener_fincas_usuario?id_usuario=${idUsuario}`)
             .then(response => response.json())

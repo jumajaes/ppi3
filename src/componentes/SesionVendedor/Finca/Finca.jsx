@@ -89,8 +89,7 @@ export function Finca() {
                 console.error('Error al obtener productos:', error);
             });
             setProductoActual(productoInicial);
-            setError(''); // Clear error after successful addition
-        });
+            setError('');});
     };
 
     const actualizarProducto = () => {
@@ -100,7 +99,6 @@ export function Finca() {
             return;
         }
     
-        // Si no se selecciona un nuevo archivo de imagen, mantener la imagen existente
         if (!productoActual.Imagen) {
             const productoExistente = productos.find((p) => p.id === productoActual.id);
             if (productoExistente) {
@@ -135,42 +133,35 @@ export function Finca() {
         .then(() => {
             const nuevosProductos = productos.filter((producto) => producto.id !== id);
             setProductos(nuevosProductos);
-            obtenerProductos(); // Llamada a obtenerProductos() después de eliminar un producto
+            obtenerProductos();
         });
     };
 
     const editarProducto = (producto) => {
-        // Convertir IDFinca a número si es necesario
         const idFincaNumero = parseInt(producto.IDFinca);
         if (isNaN(idFincaNumero)) {
             console.error('IDFinca no es un número válido:', producto.IDFinca);
-            return; // Salir de la función si IDFinca no es un número válido
+            return; 
         }
     
-        // Normalizar la estructura del objeto de producto
         const productoNormalizado = {
-            id: producto.id || '', // Asegurarse de que 'id' tenga un valor definido
-            Nombre: producto.nombre || '', // Asegurarse de que 'nombre' tenga un valor definido
-            Descripción: producto.descripcion || '', // Asegurarse de que 'descripcion' tenga un valor definido
-            Precio: producto.precio || '', // Asegurarse de que 'precio' tenga un valor definido
-            Categoría: producto.categoria_id || '', // Asegurarse de que 'categoria_id' tenga un valor definido
-            Imagen: producto.img || '', // Asegurarse de que 'img' tenga un valor definido
-            IDFinca: idFincaNumero // Utilizar el IDFinca convertido a número
+            id: producto.id || '',
+            Nombre: producto.nombre || '',
+            Descripción: producto.descripcion || '',
+            Precio: producto.precio || '', 
+            Categoría: producto.categoria_id || '',
+            Imagen: producto.img || '', 
+            IDFinca: idFincaNumero 
         };
     
-        // Actualizar el estado con el objeto normalizado
         setProductoActual(productoNormalizado);
         setModoEdicion(true);
     };
     
-    
-    
-
-    // Función para restablecer al estado inicial
     const resetProducto = () => {
         setModoEdicion(false);
         setProductoActual(productoInicial);
-        setError(''); // Clear error on reset
+        setError(''); 
     };
 
     return (
@@ -245,40 +236,7 @@ export function Finca() {
                     </div>
                     <hr width="90%"/>
                      </div> 
-                ))}
-            {/* <thead  >
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Categoría</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody className='tablebodyFinca'>
-                {productos.map((producto) => (
-                    <tr className='tablebodyFinca' key={producto.id}>
-                        <td data-label="ID">{producto.id}</td>
-                        <td data-label="Nombre">{producto.nombre}</td>
-                        <td data-label="Descripción">{producto.descripcion}</td>
-                        <td data-label="Precio">{producto.precio}</td>
-                        <td data-label="Categoría">{opcionesCategoria.map(x => {
-                            if (parseInt(x.id) === producto.categoria_id) {
-                                return x.nombre;
-                            }
-                            return "";
-                        })}</td>
-                        <td data-label="Imagen"><img src={producto.img} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
-                        <td data-label="Acciones">
-                            <button className='btproductoFinca' onClick={() => editarProducto(producto)}>Editar</button>
-                            <button className='btproductoFinca'   onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
-                        </td>
-                    </tr>
-                ))}
-            </tbody> */}
-            
+                ))}           
         </div>
     </div>
     
