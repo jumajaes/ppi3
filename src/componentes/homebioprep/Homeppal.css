@@ -1,7 +1,6 @@
 .Homeppal{
 
     display: flex;
-    flex-direction: column;
     margin: 10px;
     padding: 1px;
     justify-content: center;
@@ -14,16 +13,13 @@
     min-width: 90%;
 }
 .logocarrito{
-
-    max-height: 80px;
-    max-width: 80px;
-    background-color: #ffffff;
-    border-radius: 24px;
+    max-height: 30px;
+    max-width: 30px;
 }
 
 .busquedaHomeppal{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
     margin: 5px;
     padding: 10px;
@@ -38,12 +34,13 @@
 
 
 .buttonsHomeppal{
-  display: inline-block;
+  display: flex;
   margin: 20px;
   padding: 12px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
+  align-items: center;
   text-decoration: none;
   color: #000;
   cursor: pointer;

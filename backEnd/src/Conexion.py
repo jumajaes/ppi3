@@ -1,13 +1,12 @@
-from flask import Flask, request, jsonify 
+from flask import Flask, jsonify, request 
 import json
-import sentencias
 from flask_cors import CORS
 import pyodbc
+import sentencias
 
 
 app = Flask('__name__')
 CORS(app, resources={r"/*": {"origins": "*"}})
-
 
 @app.route('/productos')
 def productos():

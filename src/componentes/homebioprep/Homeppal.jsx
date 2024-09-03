@@ -51,16 +51,12 @@ export const Homeppal = () => {
   return (
     <div className="Homeppal">
 
-      
-      VER CARRITO
-
-      <button className="buttonsHomeppal" onClick={x}>
-        <img className='logocarrito' src={iconocarrito} alt=""></img>
-      </button>
-
-      <hr className="hr" />
       <div className="busquedaHomeppal">
 
+      <button className="buttonsHomeppal" onClick={x}>
+        VER CARRITO
+        <img className='logocarrito' src={iconocarrito} alt="VER CARRITO"></img>
+      </button>
 
         <div className="buscarNombreHomeppal">
           <input

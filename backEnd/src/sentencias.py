@@ -2,7 +2,13 @@ import pyodbc
 
 def conectar():
     try:
-        conexion = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};SERVER=DESKTOP-6KPVJGE\\J;DATABASE=bioprep;UID=sa;PWD=1234;TrustServerCertificate=yes;')
+        conexion = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};'
+    'SERVER=localhost,1433;'
+    'DATABASE=bioprep;'
+    'UID=sa;'
+    'PWD=YourStrong!Passw0rd;'
+    'TrustServerCertificate=yes;'
+)
         return conexion
     except pyodbc.Error as ex:
         print("Error de conexión:", ex)
@@ -63,9 +69,8 @@ def obtener_productos():
         conexion = conectar()
         cursor = conexion.cursor()
         cursor.execute('''
-            SELECT p.id, p.nombre, p.precio, p.categoria_id, p.descripcion, p.img, c.nombre AS nombre_categoria, IDFinca
+            SELECT p.producto_id, p.Nombre, p.Precio, p.Categoría, p.Descripción, p.Imagen, p.IDFinca
             FROM productos AS p
-            JOIN categorias AS c ON p.categoria_id = c.id;
         ''')
         rows = cursor.fetchall()
         
