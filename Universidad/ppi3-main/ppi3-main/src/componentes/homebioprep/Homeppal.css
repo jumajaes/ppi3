@@ -1,0 +1,97 @@
+.Homeppal {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
+}
+
+.hr {
+    min-width: 90%;
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}
+
+.logocarrito {
+    max-height: 30px;
+    max-width: 30px;
+    margin-left: 5%;
+}
+
+.busquedaHomeppal {
+    height: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.gridpructo {
+    margin-top: 50px;
+    display: grid;
+    min-width: max-content;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.buttonsHomeppal {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: #64db6a;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    height: 50px;
+    max-height: 50px;
+    margin: 10px;
+}
+
+.buttonsHomeppal:hover,
+.buttonsHomeppal:focus {
+    background-color: #52b857;
+    border-color: #52b857;
+}
+
+@media (max-width: 1100px) {
+    .gridpructo {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .busquedaHomeppal {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        justify-items: center;
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .gridpructo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 580px) {
+    .busquedaHomeppal {
+        gap: 10px;
+    }
+
+    .gridpructo {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

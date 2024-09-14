@@ -1,0 +1,89 @@
+.Finca{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.formFincagrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr  ;
+
+}
+
+.formFinca{
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 10px;
+    margin: 10px;
+    min-width: 420px;
+    max-width: 420px;
+    justify-items: center;
+}
+
+.btproductoFinca{
+    display: inline-block;
+    margin: 20px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    border: 5px;
+    border-radius: 5px;
+    background-color: #64db6a;
+    color: white;
+    transition: background-color 0.3s ease;
+    max-width: 300px;
+}
+
+
+
+
+
+.tablebodyFinca{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items:  center;
+    gap: 5px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #b4e9b6;
+    margin: 10px;
+}
+
+
+
+
+.Acciones{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    border: 2px dotted black;
+    justify-items:  center;
+    gap: 5px;
+
+}
+
+.celdaimg{
+    max-width: 40px;
+    max-height: 40px;
+}
+
+@media (max-width:900px) {
+
+    .formFincagrid{
+        display: grid;
+        grid-template-columns: 1fr 1fr  ;
+    
+    }
+}
+
+@media (max-width:650px) {
+
+    .formFincagrid{
+        display: grid;
+        grid-template-columns: 1fr  ;
+    
+    }
+}

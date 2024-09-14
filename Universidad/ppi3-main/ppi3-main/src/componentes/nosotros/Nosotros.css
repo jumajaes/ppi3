@@ -1,0 +1,19 @@
+.nosotros{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 15px;
+    margin: 50px;
+}
+
+.parrafonosotros{
+
+    text-align: center;
+
+}
+
+@media (max-width: 500px) {
+    .imgnosotros{
+        max-width: 170px;
+    }
+}
