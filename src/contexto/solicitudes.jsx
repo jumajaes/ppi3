@@ -15,7 +15,7 @@ const obtenerProductos = async () => {
 
 const registrarUsuario = async (nuevoUsuario) => {
   console.log(nuevoUsuario)
-  const response = await fetch('https://3167jpp0-5000.use2.devtunnels.ms/registrar-usuario', {
+  const response = await fetch('https://localhost:5000/registrar-usuario', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

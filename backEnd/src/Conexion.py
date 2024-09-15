@@ -24,7 +24,7 @@ def eliminar_producto_endpoint(id):
     if success:
         return jsonify({"mensaje": f"Producto con ID {id} eliminado correctamente"}), 200
     else:
-        return jsonify({"error": f"No se pudo eliminar el producto: {error}"}), 500
+        return jsonify({"error": f"No se pudo eliminar el producto: {error}"}), 400
     
 @app.route('/editar_producto/<int:producto_id>', methods=['PUT'])
 def editar_producto_endpoint(producto_id):

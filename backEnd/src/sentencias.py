@@ -1,4 +1,5 @@
 import pyodbc
+#Conexion----------------------------------------------------------------------------------------------------------------------------
 
 def conectar():
     try:
@@ -14,6 +15,7 @@ def conectar():
         print("Error de conexión:", ex)
         return None
 
+#Usuarios----------------------------------------------------------------------------------------------------------------------------
 
 def crear_usuario(cedula, nombre, apellido, telefono, email, rol, edad, direccion, password ):
     try:
@@ -62,100 +64,6 @@ def actualizar_datos_usuario(datos_usuario):
 
     finally:
             conexion.close()
-
-def obtener_productos():
-    json_productos = []
-    try:
-        conexion = conectar()
-        cursor = conexion.cursor()
-        cursor.execute('''
-            SELECT p.producto_id, p.Nombre, p.Precio, p.Categoría, p.Descripción, p.Imagen, p.IDFinca
-            FROM productos AS p
-        ''')
-        rows = cursor.fetchall()
-        
-        for tup in rows:
-            json_productos.append({
-                "id": tup[0],
-                "IDFinca": tup[7],
-                "nombre": tup[1],
-                "precio": float(tup[2]),
-                "categoria_id": tup[3],
-                "nombre_categoria": tup[6],  
-                "descripcion": tup[4],
-                "img": tup[5]
-            })
-            
-    except Exception as ex:
-        print("Error durante la conexión: {}".format(ex))
-    finally:
-        conexion.close()
-
-    return json_productos
-
-
-def agregar_producto(producto):
-    try:
-        conexion = conectar()
-        print(producto)
-        cursor = conexion.cursor()
-        cursor.execute("""
-            INSERT INTO productos (nombre, precio, categoria_id, descripcion, img, IDFinca)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (producto['Nombre'], producto['Precio'], int(producto['Categoría']), producto['Descripción'], producto['Imagen'], int(producto['IDFinca'])))
-
-        conexion.commit()
-
-        return {"exito": True, "mensaje": "Producto agregado exitosamente"}
-
-    except Exception as ex:
-        print("Error al agregar el producto:", ex)
-        return {"exito": False, "error": "Error al agregar el producto"}
-
-    finally:
-        if 'conexion' in locals():
-            conexion.close()
-            
-def eliminar_producto_por_id(id):
-    try:
-        conexion = conectar()
-
-        cursor = conexion.cursor()
-        
-        cursor.execute("DELETE FROM productos WHERE id = ?", id)
-        
-        conexion.commit()
-        cursor.close()
-        
-        return True, None
-    except Exception as e:
-        return False, str(e)
-    
-def actualizar_producto_por_id(producto_id, producto):
-    print(producto)
-
-    print(producto['Nombre'], producto['Precio'], producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id)
-    try:
-        
-        conexion = conectar()
-
-        cursor = conexion.cursor()
-        
-        conexion = conectar()
-
-        cursor = conexion.cursor()
-        
-        cursor.execute("UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, descripcion = ?, img = ? WHERE IDFinca = ? AND id = ?", 
-        (producto['Nombre'], int(producto['Precio']), producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id))
-
-        
-        conexion.commit()
-        cursor.close()
-        
-        return True, None
-    except Exception as e:
-        return False, str(e)
-
 
 def verificar_existencia_correo(email):
     try:
@@ -259,11 +167,94 @@ def obtener_usuario_por_correo(email):
         if 'conexion' in locals():
             conexion.close() 
 
-
-
 def verificar_contrasena(password_bd, password_ingresada):
    
     return password_bd == password_ingresada
+
+#Productos----------------------------------------------------------------------------------------------------------------------------
+
+def obtener_productos():
+    json_productos = []
+    try:
+        conexion = conectar()
+        cursor = conexion.cursor()
+        cursor.execute('''
+            SELECT *
+            FROM productos 
+        ''')
+        rows = cursor.fetchall()
+        
+            
+    except Exception as ex:
+        print("Error durante la conexión: {}".format(ex))
+    finally:
+        conexion.close()
+
+    return rows
+
+def agregar_producto(producto):
+    try:
+        conexion = conectar()
+        print(producto)
+        cursor = conexion.cursor()
+        cursor.execute("""
+            INSERT INTO productos (nombre, precio, categoria_id, descripcion, img, IDFinca)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (producto['Nombre'], producto['Precio'], int(producto['Categoría']), producto['Descripción'], producto['Imagen'], int(producto['IDFinca'])))
+
+        conexion.commit()
+
+        return {"exito": True, "mensaje": "Producto agregado exitosamente"}
+
+    except Exception as ex:
+        print("Error al agregar el producto:", ex)
+        return {"exito": False, "error": "Error al agregar el producto"}
+
+    finally:
+        if 'conexion' in locals():
+            conexion.close()
+            
+def eliminar_producto_por_id(id):
+    try:
+        conexion = conectar()
+
+        cursor = conexion.cursor()
+        
+        cursor.execute("DELETE FROM productos WHERE id = ?", id)
+        
+        conexion.commit()
+        cursor.close()
+        
+        return True, None
+    except Exception as e:
+        return False, str(e)
+    
+def actualizar_producto_por_id(producto_id, producto):
+    print(producto)
+
+    print(producto['Nombre'], producto['Precio'], producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id)
+    try:
+        
+        conexion = conectar()
+
+        cursor = conexion.cursor()
+        
+        conexion = conectar()
+
+        cursor = conexion.cursor()
+        
+        cursor.execute("UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, descripcion = ?, img = ? WHERE IDFinca = ? AND id = ?", 
+        (producto['Nombre'], int(producto['Precio']), producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id))
+
+        
+        conexion.commit()
+        cursor.close()
+        
+        return True, None
+    except Exception as e:
+        return False, str(e)
+
+#Fincas----------------------------------------------------------------------------------------------------------------------------
 
 def agregar_finca(id_usuario, nombre_finca):
     try:
