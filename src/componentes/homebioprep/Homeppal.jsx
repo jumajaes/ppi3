@@ -6,32 +6,32 @@ import { useNavigate } from "react-router-dom";
 import iconocarrito from './iconocarrito.jpg'
 
 export const Homeppal = () => {
-  const { obtenerProductos, usuario } = useData(); 
+  const { obtenerProductos, usuario } = useData();
   const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
-  const [value, setValue] = useState(""); 
-  const [categoria, setCategoria] = useState(""); 
-  const [filteredProducts, setFilteredProducts] = useState([]); 
-  const x = () => {
+  const [value, setValue] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const onClickCar = () => {
     console.log(usuario)
     usuario === null && alert('Debes iniciar sesion')
     usuario !== null ? navigate('/carrito') : navigate('/')
 
   }
   useEffect(() => {
-   
+
     obtenerProductos()
       .then((resolucion) => {
         setProductos(resolucion);
-        setFilteredProducts(resolucion); 
+        setFilteredProducts(resolucion);
       })
       .catch((error) => {
         console.error('Error al obtener productos:', error);
       });
-  }, [obtenerProductos]); 
+  }, [obtenerProductos]);
 
   useEffect(() => {
-   
+
     const filtered = productos.filter((producto) => {
       const matchesSearch = producto.nombre.toLowerCase().includes(value.toLowerCase());
       const matchesCategory = categoria === "" || producto.categoria_id === parseInt(categoria);
@@ -45,20 +45,21 @@ export const Homeppal = () => {
   };
 
   const filtrarCategoria = (e) => {
-    setCategoria(e.target.value); 
+    setCategoria(e.target.value);
   };
 
   return (
     <div className="Homeppal">
 
-      <div className="busquedaHomeppal">
+      <div className="carContainer">
+        <button className="btCar" onClick={onClickCar}>
+          VER CARRITO
+          <img className='logocarrito' src={iconocarrito} alt="VER CARRITO"></img>
+        </button>
+      </div>
 
-      <button className="buttonsHomeppal" onClick={x}>
-        VER CARRITO
-        <img className='logocarrito' src={iconocarrito} alt="VER CARRITO"></img>
-      </button>
-
-        <div className="buscarNombreHomeppal">
+      <div className="searchContainer">
+        <div className="search">
           <input
             type="text"
             name="busqueda"
@@ -68,34 +69,26 @@ export const Homeppal = () => {
             onChange={filtrarNombre}
           />
         </div>
-
-
-
-        <div>
-
-          <select name="categorias" value={categoria} className="buttonsHomeppal" onChange={filtrarCategoria}>
-            <option value="">Selecciona una categoria</option>
-            <option value="1">Abono</option>
-            <option value="2">Fertilizante</option>
-            <option value="3">Fungicida</option>
-            <option value="4">Plaguicida</option>
-            <option value="5">Herbicida</option>
-            <option value="6">Nutridor</option>
-            <option value="7">Hidratante</option>
-            <option value="8">Calcio</option>
-          </select>
-
-        </div>
-
-
-
       </div>
 
+      <div className="filterContainer">
+        <select name="categorias" value={categoria} className="buttonsHomeppal" onChange={filtrarCategoria}>
+          <option value="">Filtrar categorias / limpiar filtro</option>
+          <option value="1">Abono</option>
+          <option value="2">Fertilizante</option>
+          <option value="3">Fungicida</option>
+          <option value="4">Plaguicida</option>
+          <option value="5">Herbicida</option>
+          <option value="6">Nutridor</option>
+          <option value="7">Hidratante</option>
+          <option value="8">Calcio</option>
+        </select>
+      </div>
 
-      <div className="gridpructo">
+      <div className="gridproductos">
         {filteredProducts.length > 0 &&
           filteredProducts.map((producto) => (
-            <Producto key={producto.id} producto={producto} llavecarrito={false}/>
+            <Producto key={producto.id} producto={producto} llavecarrito={false} />
           ))}
       </div>
 

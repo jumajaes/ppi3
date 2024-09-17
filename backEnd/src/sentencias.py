@@ -38,7 +38,7 @@ def crear_usuario(cedula, nombre, apellido, telefono, email, rol, edad, direccio
 
 def actualizar_datos_usuario(datos_usuario):
     try:
-        print(datos_usuario)
+        print(datos_usuario , "&&")
         conexion = conectar()
 
         cursor = conexion.cursor()
@@ -46,13 +46,13 @@ def actualizar_datos_usuario(datos_usuario):
             cursor.execute("""
                 UPDATE usuarios 
                 SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?, password = ?
-                WHERE id = ?;
+                WHERE id_usuario = ?;
             """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['password'], datos_usuario['id']))
         else:
             cursor.execute("""
                 UPDATE usuarios 
                 SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, direccion = ?
-                WHERE id = ?;
+                WHERE id_usuario = ?;
             """, (datos_usuario['nombre'], datos_usuario['apellido'], datos_usuario['edad'], datos_usuario['telefono'], datos_usuario['email'], datos_usuario['direccion'], datos_usuario['id']))
 
         conexion.commit()
@@ -179,28 +179,42 @@ def obtener_productos():
         conexion = conectar()
         cursor = conexion.cursor()
         cursor.execute('''
-            SELECT *
-            FROM productos 
+            SELECT p.*, f.nombre_finca, c.nombre AS nombre_categoria
+            FROM productos AS p
+            JOIN fincas AS f ON p.id_finca = f.id_finca
+            JOIN categorias AS c ON p.categoria_id = c.categoria_id
         ''')
         rows = cursor.fetchall()
         
+        for tup in rows:
+            json_productos.append({
+                "producto_id": tup[0],
+                "nombre": tup[1],
+                "precio": float(tup[2]),
+                "descripcion": tup[3],
+                "imagen": tup[4],
+                "id_finca": tup[5],
+                "categoria_id": tup[6],
+                "nombre_finca": tup[7],
+                "nombre_categoria": tup[8]
+            })
             
     except Exception as ex:
         print("Error durante la conexión: {}".format(ex))
-    finally:
-        conexion.close()
-
-    return rows
+   
+    return json_productos
 
 def agregar_producto(producto):
+    print(producto)
     try:
         conexion = conectar()
         print(producto)
         cursor = conexion.cursor()
         cursor.execute("""
-            INSERT INTO productos (nombre, precio, categoria_id, descripcion, img, IDFinca)
+            INSERT INTO productos (nombre, precio, descripcion, imagen, id_finca, categoria_id)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, (producto['Nombre'], producto['Precio'], int(producto['Categoría']), producto['Descripción'], producto['Imagen'], int(producto['IDFinca'])))
+        """, (producto['Nombre'], producto['Precio'], producto['Descripcion'], producto['Imagen'], int(producto['IDFinca']), int(producto['Categoria']))
+        )
 
         conexion.commit()
 
@@ -262,7 +276,7 @@ def agregar_finca(id_usuario, nombre_finca):
         print(id_usuario, nombre_finca)
         cursor = conexion.cursor()
         cursor.execute("""
-            INSERT INTO Fincas (IDDueño, nombre)
+            INSERT INTO fincas (id_usuario, nombre_finca)
             VALUES (?, ?)
         """, (id_usuario, nombre_finca))
 
@@ -284,7 +298,7 @@ def eliminar_finca(id_finca):
         conexion = conectar()
 
         cursor = conexion.cursor()
-        cursor.execute("DELETE FROM Fincas WHERE ID = ?",id_finca)
+        cursor.execute("DELETE FROM Fincas WHERE id_finca = ?",id_finca)
 
         conexion.commit()
 
@@ -305,8 +319,8 @@ def obtener_fincas_usuario(id_usuario):
 
         cursor = conexion.cursor()
         cursor.execute("""
-            SELECT * FROM Fincas
-            WHERE IDDueño = ?
+            SELECT * FROM fincas
+            WHERE id_usuario = ?
         """, (id_usuario))
 
         columnas = [columna[0] for columna in cursor.description]

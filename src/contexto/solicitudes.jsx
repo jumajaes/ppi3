@@ -33,7 +33,7 @@ const registrarUsuario = async (nuevoUsuario) => {
 
 const iniciarSesion = async (email, password) => {
   try {
-    const response = await fetch('https://3167jpp0-5000.use2.devtunnels.ms/iniciar-sesion', {
+    const response = await fetch('http://localhost:5000/iniciar-sesion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,6 +55,7 @@ const iniciarSesion = async (email, password) => {
 };
 
 const actualizarDatosUsuario = async (datosUsuario) => {
+  console.log(datosUsuario)
   try {
     const response = await fetch(APIUrls.ACTUALIZAR_USUARIO, {
       method: 'POST',

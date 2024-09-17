@@ -19,9 +19,9 @@ export const Sesion = () => {
         if (result.usuario) {
           setUsuario(result.usuario);
           setBtIniciarSesion("PERFIL")
-          if (result.usuario.rol === 'Vendedor') {
+          if (result.usuario.rol === 3) {
             navigate('/sesionvendedor');
-          } else if (result.usuario.rol === 'Comprador') {
+          } else if (result.usuario.rol === 4 || result.usuario.rol === 1 || result.usuario.rol === 2 ) {
             navigate('/usuario');
           }
         }

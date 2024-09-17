@@ -4,10 +4,9 @@ import { useData } from '../../contexto/variables';
 
 export const Producto = ({ producto, llavecarrito }) => {
 
-    console.log(producto)
     const { usuario, setResetCarrito } = useData()
     const [tel, settel] = useState("")
-
+    console.log(producto)
     const abrirWhatsApp = (tel, id, nombre, precio, categoria, descripcion, img) => {
         
         const mensaje = `Hola, me interesa este producto ID : ${id} NOMBRE: ${nombre},
@@ -18,18 +17,16 @@ export const Producto = ({ producto, llavecarrito }) => {
 
     const nombrefinca = async (id)=>{
        
-        const response = await fetch(`https://3167jpp0-5000.use2.devtunnels.ms/obtener_nombrefincas?id_usuario=${id}`)
+        const response = await fetch(`http://localhost:5000/obtener_nombrefincas?id_usuario=${id}`)
         const data = await response.json();
     
         settel(data)
         true ? abrirWhatsApp(tel, producto.id,
             producto.nombre, producto.precio, producto.categoria, producto.descripcion, producto.img) : alert("Debe iniciar sesion")
-
-        
     }
 
     const eliminarProductoCarrito = async (id_usuario, id_producto) => {
-        const url = `https://3167jpp0-5000.use2.devtunnels.ms/eliminar-producto-carrito/${id_usuario}/${id_producto}`;
+        const url = `http://localhost:5000/eliminar-producto-carrito/${id_usuario}/${id_producto}`;
 
         try {
             const response = await fetch(url, {
@@ -53,8 +50,9 @@ export const Producto = ({ producto, llavecarrito }) => {
     }
 
     const agregarProductoCarrito = async (idUsuario, idProducto) => {
+        console.log(idUsuario, idProducto)
         try {
-            const response = await fetch('https://3167jpp0-5000.use2.devtunnels.ms/agregar-producto-carrito', {
+            const response = await fetch('http://localhost:5000/agregar-producto-carrito', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -70,7 +68,7 @@ export const Producto = ({ producto, llavecarrito }) => {
             }
 
             const data = await response.json();
-            // console.log(data);
+            console.log(data);
             return data;
         } catch (error) {
             console.error('Error al agregar producto:', error);
@@ -94,7 +92,7 @@ export const Producto = ({ producto, llavecarrito }) => {
         usuario === null | undefined && alert("Debes iniciar sesion")
         !llavecarrito ?
             usuario !== null | undefined &&
-            agregarProductoCarrito(usuario.id, producto.id).then(resultado => {
+            agregarProductoCarrito(usuario.id, producto.producto_id).then(resultado => {
                 if (resultado.error) {
                     console.error(resultado.error);
                 } else {
@@ -115,10 +113,9 @@ export const Producto = ({ producto, llavecarrito }) => {
 
             <div className="informacionProducto">
                 <h1>{producto.nombre}</h1>
-                <img className='imgproducto' src={producto.img} alt="" ></img>
-                <h5 >#{producto.id}</h5>
-
-                <h2 className={interrupTor ? "product-categoriaProducto" : "ocultoProducto"}>Categoria: {producto.nombre_categoria} </h2>
+                <img className='imgproducto' src={producto.imagen} alt="?" ></img>
+                <h5>#{producto.producto_id}</h5>
+                <h2 className="product-categoriaProducto">{producto.nombre_categoria} </h2>
                 <h2 className={interrupTor ? "product-descripcionProducto" : "ocultoProducto"}>Descripcion:</h2>
                 <h2 className={interrupTor ? "product-descripcionProducto" : "ocultoProducto"}>{producto.descripcion}</h2>
                 <p className="product-priceProducto">Precio Unidad: $ {producto.precio}</p>

@@ -68,26 +68,26 @@ INSERT INTO fincas (id_usuario, nombre_finca) VALUES
 
 -- Insertar datos en la tabla productos
 INSERT INTO productos (nombre, precio, descripcion, imagen, id_finca, categoria_id) VALUES
-('prod', 12, '121d', 'deswd', 1, 1),
-('prod3', 15, '123d', 'deswd3', 1, 2),
-('prod4', 18, '124d', 'deswd4', 1, 3),
-('prod5', 20, '125d', 'deswd5', 1, 4),
-('prod6', 22, '126d', 'deswd6', 1, 5),
-('prod7', 25, '127d', 'deswd7', 1, 6),
-('prod8', 28, '128d', 'deswd8', 1, 7),
-('prod9', 30, '129d', 'deswd9', 1, 8),
-('prod10', 32, '130d', 'deswd10', 1, 1),
-('prod11', 35, '131d', 'deswd11', 1, 2),
-('prod12', 38, '132d', 'deswd12', 1, 3),
-('prod13', 40, '133d', 'deswd13', 1, 4),
-('prod14', 42, '134d', 'deswd14', 1, 5),
-('prod15', 45, '135d', 'deswd15', 1, 6),
-('prod16', 48, '136d', 'deswd16', 1, 7),
-('prod17', 50, '137d', 'deswd17', 1, 8),
-('prod18', 52, '138d', 'deswd18', 1, 1),
-('prod19', 55, '139d', 'deswd19', 1, 2),
-('prod20', 58, '140d', 'deswd20', 1, 3),
-('prod21', 60, '141d', 'deswd21', 1, 4);
+('prod', 12, '121d', 'deswd', 3, 1),
+('prod3', 15, '123d', 'deswd3', 3, 2),
+('prod4', 18, '124d', 'deswd4', 4, 3),
+('prod5', 20, '125d', 'deswd5', 5, 4),
+('prod6', 22, '126d', 'deswd6', 5, 5),
+('prod7', 25, '127d', 'deswd7', 5, 6),
+('prod8', 28, '128d', 'deswd8', 4, 7),
+('prod9', 30, '129d', 'deswd9', 3, 8),
+('prod10', 32, '130d', 'deswd10', 6, 1),
+('prod11', 35, '131d', 'deswd11', 6, 2),
+('prod12', 38, '132d', 'deswd12', 6, 3),
+('prod13', 40, '133d', 'deswd13', 3, 4),
+('prod14', 42, '134d', 'deswd14', 3, 5),
+('prod15', 45, '135d', 'deswd15', 3, 6),
+('prod16', 48, '136d', 'deswd16', 5, 7),
+('prod17', 50, '137d', 'deswd17', 4, 8),
+('prod18', 52, '138d', 'deswd18', 6, 1),
+('prod19', 55, '139d', 'deswd19', 3, 2),
+('prod20', 58, '140d', 'deswd20', 5, 3),
+('prod21', 60, '141d', 'deswd21', 4, 4);
 
 -- Insertar datos en la tabla categorias
 INSERT INTO categorias (nombre) VALUES
@@ -106,3 +106,13 @@ INSERT INTO roles (nombre) VALUES
 ('super admin'),
 ('vendedor'),
 ('comprador');
+
+ALTER TABLE productos ALTER COLUMN imagen TEXT;
+
+CREATE TABLE carrito (
+    IDUsuario INT,
+    IDProducto INT,
+    FOREIGN KEY (IDUsuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (IDProducto) REFERENCES productos(producto_id)
+);
+

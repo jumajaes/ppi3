@@ -10,7 +10,7 @@ export const Carrito = () => {
 
     const obtenerProductosCarrito = async (usuario) => {
         try {
-            const response = await fetch(`/obtener-productos-carrito/${usuario.id}`, {
+            const response = await fetch(`http://localhost:5000/obtener-productos-carrito/${usuario.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,9 +48,10 @@ export const Carrito = () => {
     }, [obtenerProductos, usuario, resetCarrito]);
 
     const productosFiltrados = productos.filter(producto => {
-        return productosCarrito.some(elemento => producto.id === elemento.IDProducto);
+        return productosCarrito.some(elemento => producto.producto_id === elemento.IDProducto);
     });
 
+    console.log(productosCarrito)
     console.log(productosFiltrados)
 
     const productosPorCategoria = productosFiltrados.reduce((acc, producto) => {

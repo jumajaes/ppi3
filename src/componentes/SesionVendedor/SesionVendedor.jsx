@@ -12,7 +12,7 @@ export function SesionVendedor() {
 
     const idUsuario = usuario.id;
     const obtenerFincas = () => {
-        fetch(`https://3167jpp0-5000.use2.devtunnels.ms/obtener_fincas_usuario?id_usuario=${idUsuario}`)
+        fetch(`http://localhost:5000/obtener_fincas_usuario?id_usuario=${idUsuario}`)
             .then(response => response.json())
             .then(data =>{ 
                 console.log(data.fincas)
@@ -25,7 +25,7 @@ export function SesionVendedor() {
     const agregarBoton = (nombre) => {
 
         console.log(nombre, idUsuario)
-        fetch('https://3167jpp0-5000.use2.devtunnels.ms/agregar_finca', {
+        fetch('http://localhost:5000/agregar_finca', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export function SesionVendedor() {
 
     const eliminarBoton = (index) => {
         console.log(index)
-        fetch(`https://3167jpp0-5000.use2.devtunnels.ms/eliminar_finca`, {
+        fetch(`http://localhost:5000/eliminar_finca`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,15 +79,15 @@ export function SesionVendedor() {
             }}>
                 Agregar Finca
             </button>
-            {botones.map((e) => (
-                <div  key={e.ID} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <div className="btFinca" >{e.nombre}</div>
+            {botones.map((finca) => (
+                <div  key={finca.id_finca} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <div className="btFinca" >{finca.nombre_finca}</div>
                     <Link className="btFinca" onClick={()=>{
                         
-                    }} to={`/finca/${e.ID}`}>
+                    }} to={`/finca/${finca.id_finca}`}>
                     
                     <img className="imgFinca" src={imgFinca} alt="imagen" style={{ maxWidth: '300px', minHeight: '300px' }} /></Link>
-                    <button className="btFinca" onClick={() => eliminarBoton(e.ID)} >x Eliminar Finca</button>
+                    <button className="btFinca" onClick={() => eliminarBoton(finca.id_finca)} >x Eliminar Finca</button>
                     <hr width="90%"/>
                 </div>
                 

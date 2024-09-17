@@ -57,6 +57,8 @@ const Usuario = () => {
     if (result) {
       setMostrarActualizarContrasena(false)
       console.log("Datos actualizados correctamente");
+      setUsuario(datosActualizados)
+      console.log(datosActualizados, "$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     } else {
       console.error("Error al actualizar datos del usuario");
     }
@@ -73,7 +75,7 @@ const Usuario = () => {
       </button>
 
       <button className='btusuario' onClick={() => {
-        navigate('/sesionvendedor')
+        (datosUsuario.rol >= 1 && datosUsuario.rol <= 3 ) ? navigate('/sesionvendedor') : alert("Deber ser un vendedor.")
       }}>
         MIS FINCAS
       </button>

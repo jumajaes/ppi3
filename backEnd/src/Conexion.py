@@ -156,7 +156,13 @@ def eliminar_finca():
 
 def conectar():
     try:
-        conexion = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};SERVER=DESKTOP-6KPVJGE\\J;DATABASE=bioprep;UID=sa;PWD=1234;TrustServerCertificate=yes;')
+        conexion = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};'
+    'SERVER=localhost,1433;'
+    'DATABASE=bioprep;'
+    'UID=sa;'
+    'PWD=YourStrong!Passw0rd;'
+    'TrustServerCertificate=yes;'
+)
         return conexion
     except pyodbc.Error as ex:
         print("Error de conexión:", ex)
@@ -170,7 +176,7 @@ def obtener_productos_carrito(id_usuario):
         if conexion:
             cursor = conexion.cursor()
            
-            cursor.execute("SELECT * FROM Carrito WHERE IDUsuario=?", (id_usuario,))
+            cursor.execute("SELECT * FROM carrito WHERE IDUsuario=?", (id_usuario))
             productos_carrito = cursor.fetchall()
            
             productos_carrito = [dict(zip([column[0] for column in cursor.description], row)) for row in productos_carrito]
@@ -193,7 +199,7 @@ def agregar_producto_carrito():
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
-            cursor.execute("INSERT INTO Carrito (IDUsuario, IDProducto) VALUES (?, ?)", (id_usuario, id_producto))
+            cursor.execute("INSERT INTO carrito (IDUsuario, IDProducto) VALUES (?, ?)", (id_usuario, id_producto))
             conexion.commit()
             conexion.close()
             return jsonify({"mensaje": "Producto agregado al carrito correctamente"})
@@ -208,7 +214,7 @@ def eliminar_producto_carrito(id_usuario, id_producto):
         conexion = conectar()
         if conexion:
             cursor = conexion.cursor()
-            cursor.execute("DELETE FROM Carrito WHERE IDUsuario=? AND IDProducto=?", (id_usuario, id_producto))
+            cursor.execute("DELETE FROM carrito WHERE IDUsuario=? AND IDProducto=?", (id_usuario, id_producto))
             conexion.commit()
             conexion.close()
             return jsonify({"mensaje": "Producto eliminado del carrito correctamente"})

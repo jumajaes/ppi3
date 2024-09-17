@@ -1,55 +1,78 @@
 .fondoProducto {
-
-    display: grid;
-    grid-template-columns: 1fr;
-    background-color: #4CAF50;
-    border-radius: 60px;
-    margin: 10px;
-    transition: transform 0.3s ease;
-
-}
-
-.fondoProducto:hover {
-    transform: scale(1.05);
-}
-
-.informacionProducto {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0; /* Elimina el margen para evitar espacios en blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    flex: 1 1 calc(33.333% - 40px); /* Ajusta el tamaño de los productos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra los elementos en el eje Y */
+    align-items: center; /* Centra los elementos en el eje X */
+  }
+  
+  .fondoProducto:hover {
+    transform: scale(1.02);
+  }
+  
+  .informacionProducto {
     text-align: center;
-    color: #ffffff;
-    padding: 5px;
-}
-
-.imgproducto{
-    max-width: 200px;
-    max-height: 440px;
-
-}
-
-.btproducto {
-    display: inline-block;
-    margin: 20px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
-    border: 5px;
-    border-radius: 5px;
-    background-color: #64db6a;
-    color: white;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  }
+  
+  .informacionProducto h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .imgproducto {
+    width: 100%;
     max-width: 300px;
-    max-height:50px ;
-}
-
-.ocultocontacto{
+    height: auto;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
+  
+  .informacionProducto h5 {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .product-categoriaProducto, .product-descripcionProducto {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .ocultoProducto {
     display: none;
-}
-
-.ocultoProducto {
+  }
+  
+  .product-priceProducto {
+    font-size: 20px;
+    color: #e91e63;
+    margin: 10px 0;
+  }
+  
+  .btproducto {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    min-width: 90%;
+  }
+  
+  .btproducto:hover {
+    background-color: #45a049;
+  }
+  
+  .ocultocontacto {
     display: none;
-}   
+  }
+  

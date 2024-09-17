@@ -1,0 +1,78 @@
+.Homeppal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .carContainer {
+    margin-bottom: 20px;
+  }
+  
+  .btCar {
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid black; 
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  .btCar:hover {
+    background-color: #45a049;
+  }
+  
+  .logocarrito {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+  }
+  
+  .searchContainer, .filterContainer {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  
+  .search {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .buttonsHomeppal {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .gridproductos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  @media (max-width: 768px) {
+    .btCar {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  
+    .buttonsHomeppal {
+      font-size: 14px;
+      padding: 4px;
+    }
+  }
+  
