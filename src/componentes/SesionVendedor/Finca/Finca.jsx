@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./Finca.css"
 import { useParams } from 'react-router-dom';
 import { useData } from '../../../contexto/variables';
+import { Producto } from "../../Producto/Producto";
 
 export function Finca() {
     const opcionesCategoria = [
@@ -29,7 +30,7 @@ export function Finca() {
 
     useEffect(() => {
         obtenerProductos().then((resolucion) => {
-            setProductos(resolucion.filter((producto) => producto.IDFinca === parseInt(idFinca)));
+            setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
         }).catch((error) => {
             console.error('Error al obtener productos:', error);
         });
@@ -73,7 +74,6 @@ export function Finca() {
             setError(errorMsg);
             return;
         }
-        console.log(productoActual)
 
         fetch(`http://localhost:5000/agregar_producto`, {
             method: 'POST',
@@ -85,7 +85,7 @@ export function Finca() {
             .then(response => response.json())
             .then(data => {
                 obtenerProductos().then((resolucion) => {
-                    setProductos(resolucion.filter((producto) => producto.IDFinca === parseInt(idFinca)));
+                    setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
                 }).catch((error) => {
                     console.error('Error al obtener productos:', error);
                 });
@@ -107,7 +107,6 @@ export function Finca() {
                 setProductoActual({ ...productoActual, Imagen: productoExistente.Imagen });
             }
         }
-        console.log()
         fetch(`http://localhost:5000/editar_producto/${productoActual.id}`, {
             method: 'PUT',
             headers: {
@@ -118,7 +117,7 @@ export function Finca() {
             .then(response => response.json())
             .then(data => {
                 obtenerProductos().then((resolucion) => {
-                    setProductos(resolucion.filter((producto) => producto.IDFinca === parseInt(idFinca)));
+                    setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
                 }).catch((error) => {
                     console.error('Error al obtener productos:', error);
                 });
@@ -129,7 +128,7 @@ export function Finca() {
     };
 
     const eliminarProducto = (id) => {
-        fetch(`https://3167jpp0-5000.use2.devtunnels.ms/eliminar-producto/${id}`, {
+        fetch(`http://localhost:5000/eliminar-producto/${id}`, {
             method: 'DELETE'
         })
             .then(() => {
@@ -140,9 +139,9 @@ export function Finca() {
     };
 
     const editarProducto = (producto) => {
-        const idFincaNumero = parseInt(producto.IDFinca);
+        const idFincaNumero = parseInt(producto.id_finca);
         if (isNaN(idFincaNumero)) {
-            console.error('IDFinca no es un número válido:', producto.IDFinca);
+            console.error('IDFinca no es un número válido:', producto.id_finca);
             return;
         }
 
@@ -173,7 +172,7 @@ export function Finca() {
                 <>
                     <div className="formFinca">
                         <label>{productoActual.id}</label>
-                        <input  value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
+                        <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
                         <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
                         <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" required />
                         <select className='btproductoFinca' value={productoActual.Categoria} onChange={handleCategoriaChange}>
@@ -206,34 +205,17 @@ export function Finca() {
             <div className='formFincagrid' >
 
                 {productos.map((producto) => {
-
-                    return <div className='tablebodyFinca' key={producto.id}>
-
-                        <div data-label="ID"> ID:</div>
-                        <div className='btproductoFinca' data-label="ID">{producto.id}</div>
-                        <div data-label="Nombre">Nombre:</div>
-                        <div className='btproductoFinca' data-label="Nombre"> {producto.nombre}</div>
-                        <div data-label="Descripción">Descripción:</div>
-                        <div className='btproductoFinca' data-label="Descripción">{producto.descripcion}</div>
-                        <div data-label="Precio">Precio:</div>
-                        <div className='btproductoFinca' data-label="Precio">Precio: {producto.precio}</div>
-                        <div data-label="Categoría">Categoría:</div>
-                        <div className='btproductoFinca' data-label="Categoría">Categoría: {opcionesCategoria.map(x => {
-                            if (parseInt(x.id) === producto.categoria_id) {
-                                return x.nombre;
-                            }
-                            return "";
-                        })}</div>
-                        <div className='btproductoFinca' data-label="Imagen"><img className='celdaimg' src={producto.img} alt="Producto" style={{ width: '250px', height: '50px' }} /></div>
-                        <div className=''>Acciones</div>
-                        <div className='Acciones' data-label="Acciones">
-
-                            <button className='btproductoFinca' onClick={() => editarProducto(producto)}>Editar</button>
-                            <button className='btproductoFinca' onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
-
+                    console.log(producto)
+                    return (
+                        <div >
+                            <Producto key={producto.producto_id} producto={producto} llavecarrito={false} />
+                            <div style={{ margin: 8 }}>Acciones</div>
+                            <div className='Acciones' data-label="Acciones">
+                                <button className='btproductoFinca' onClick={() => editarProducto(producto)}>Editar</button>
+                                <button className='btproductoFinca' onClick={() => eliminarProducto(producto.producto_id)}>Eliminar</button>
+                            </div>
                         </div>
-                        <hr width="90%" />
-                    </div>
+                    )
                 })}
             </div>
         </div>

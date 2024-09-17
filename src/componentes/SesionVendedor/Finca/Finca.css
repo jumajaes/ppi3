@@ -6,7 +6,10 @@
 
 .formFincagrid{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr  ;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
 
 }
 
@@ -37,10 +40,6 @@
     transition: background-color 0.3s ease;
     max-width: 300px;
 }
-
-
-
-
 
 .tablebodyFinca{
     display: grid;

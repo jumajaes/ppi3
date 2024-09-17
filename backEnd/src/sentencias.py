@@ -205,7 +205,6 @@ def obtener_productos():
     return json_productos
 
 def agregar_producto(producto):
-    print(producto)
     try:
         conexion = conectar()
         print(producto)
@@ -234,7 +233,7 @@ def eliminar_producto_por_id(id):
 
         cursor = conexion.cursor()
         
-        cursor.execute("DELETE FROM productos WHERE id = ?", id)
+        cursor.execute("DELETE FROM productos WHERE producto_id = ?", id)
         
         conexion.commit()
         cursor.close()
