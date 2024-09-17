@@ -29,7 +29,6 @@ def eliminar_producto_endpoint(id):
 @app.route('/editar_producto/<int:producto_id>', methods=['PUT'])
 def editar_producto_endpoint(producto_id):
     producto = request.get_json()
-    print(producto)
     success, error = sentencias.actualizar_producto_por_id(producto_id, producto)
     if success:
         return jsonify({"mensaje": f"Producto con ID {producto_id} actualizado correctamente"}), 200
@@ -152,7 +151,7 @@ def eliminar_finca():
     return jsonify(resultado)
 
 
-
+#Carrito---------------------------------------------------------------------------------------------------------------------------------
 
 def conectar():
     try:

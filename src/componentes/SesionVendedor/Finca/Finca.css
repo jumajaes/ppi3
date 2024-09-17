@@ -1,88 +1,174 @@
-.Finca{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-.formFincagrid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px;
-
+/* Main Container */
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.formFinca{
-    display: grid;
-    grid-template-columns: 1fr ;
-    gap: 10px;
-    margin: 10px;
-    min-width: 420px;
-    max-width: 420px;
-    justify-items: center;
+/* Error Message */
+div.error {
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+    border: 1px solid #ff4d4d;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
-.btproductoFinca{
-    display: inline-block;
-    margin: 20px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
+/* Heading Styles */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #64db6a;
     text-align: center;
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
-    border: 5px;
-    border-radius: 5px;
+}
+
+h6 {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0 1rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #64db6a;
+    outline: none;
+}
+
+/* Button Styles */
+button {
     background-color: #64db6a;
     color: white;
-    transition: background-color 0.3s ease;
-    max-width: 300px;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0.5rem ;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.tablebodyFinca{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items:  center;
-    gap: 5px;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #b4e9b6;
-    margin: 10px;
+button:hover {
+    background-color: #57c961;
+    transform: scale(1.05);
 }
 
-
-
-
-.Acciones{
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-    border: 2px dotted black;
-    justify-items:  center;
-    gap: 5px;
-
+/* Action Buttons Styles */
+.Acciones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
-.celdaimg{
-    max-width: 40px;
-    max-height: 40px;
+.btproductoFinca {
+    background-color: #007bff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-@media (max-width:900px) {
+.btproductoFinca:hover {
+    background-color: #0056b3;
+}
 
-    .formFincagrid{
-        display: grid;
-        grid-template-columns: 1fr 1fr  ;
-    
+/* Product List */
+h3 {
+    text-align: center;
+    margin-top: 2rem;
+    color: #777;
+}
+
+/* Divider */
+hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h6 {
+        font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    select {
+        padding: 0.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .Acciones {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btproductoFinca {
+        width: 100%;
+        margin: 0.5rem 0;
     }
 }
 
-@media (max-width:650px) {
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
 
-    .formFincagrid{
-        display: grid;
-        grid-template-columns: 1fr  ;
-    
+    .container {
+        margin: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    h6 {
+        font-size: 0.8rem;
+    }
+
+    input[type="text"],
+    select {
+        padding: 0.4rem;
+    }
+
+    button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
     }
 }

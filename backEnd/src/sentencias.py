@@ -244,8 +244,7 @@ def eliminar_producto_por_id(id):
     
 def actualizar_producto_por_id(producto_id, producto):
     print(producto)
-
-    print(producto['Nombre'], producto['Precio'], producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id)
+    print(producto_id)
     try:
         
         conexion = conectar()
@@ -256,8 +255,8 @@ def actualizar_producto_por_id(producto_id, producto):
 
         cursor = conexion.cursor()
         
-        cursor.execute("UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, descripcion = ?, img = ? WHERE IDFinca = ? AND id = ?", 
-        (producto['Nombre'], int(producto['Precio']), producto['Categoría'], producto['Descripción'], producto['Imagen'], producto['IDFinca'], producto_id))
+        cursor.execute("UPDATE productos SET nombre = ?, precio = ?, categoria_id = ?, descripcion = ?, imagen = ? WHERE id_finca = ? AND producto_id = ?", 
+        (producto['Nombre'], int(producto['Precio']), producto['Categoria'], producto['Descripcion'], producto['Imagen'], producto['IDFinca'], producto_id))
 
         
         conexion.commit()

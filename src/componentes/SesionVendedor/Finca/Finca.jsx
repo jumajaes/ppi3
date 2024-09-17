@@ -6,7 +6,7 @@ import { Producto } from "../../Producto/Producto";
 
 export function Finca() {
     const opcionesCategoria = [
-        { id: "", nombre: "Selecciona una categoría / Ninguna..." },
+        { id: "", nombre: "Selecciona categoría / Ninguna" },
         { id: "1", nombre: "Abono" },
         { id: "2", nombre: "Fertilizante" },
         { id: "3", nombre: "Fungicida" },
@@ -95,6 +95,7 @@ export function Finca() {
     };
 
     const actualizarProducto = () => {
+        console.log(productoActual.id, "&&&&&&&&&&&&&&&&&&")
         const errorMsg = validarProducto();
         if (errorMsg) {
             setError(errorMsg);
@@ -102,7 +103,7 @@ export function Finca() {
         }
 
         if (!productoActual.Imagen) {
-            const productoExistente = productos.find((p) => p.id === productoActual.id);
+            const productoExistente = productos.find((producto) => producto.producto_id === productoActual.id);
             if (productoExistente) {
                 setProductoActual({ ...productoActual, Imagen: productoExistente.Imagen });
             }
@@ -146,12 +147,12 @@ export function Finca() {
         }
 
         const productoNormalizado = {
-            id: producto.id || '',
+            id: producto.producto_id || '',
             Nombre: producto.nombre || '',
             Descripcion: producto.descripcion || '',
             Precio: producto.precio || '',
             Categoria: producto.categoria_id || '',
-            Imagen: producto.img || '',
+            Imagen: producto.iamgen || '',
             IDFinca: idFincaNumero
         };
 
@@ -166,53 +167,62 @@ export function Finca() {
     };
 
     return (
-        <div className='Finca'>
-            {error && <div className="error">{error}</div>}
+        <div >
+            {error && <div>{error}</div>}
             {modoEdicion ? (
-                <>
-                    <div className="formFinca">
-                        <label>{productoActual.id}</label>
+                <div >
+                    <h1>ID: {productoActual.id}</h1>
+                    <div >
+                        <h6>Nombre:</h6>
                         <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
+                        <h6>Descripción:</h6>
                         <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
+                        <h6>Precio:</h6>
                         <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" required />
-                        <select className='btproductoFinca' value={productoActual.Categoria} onChange={handleCategoriaChange}>
-                            {opcionesCategoria.map((opcion, index) => (
-                                <option key={index} value={opcion.id}>{opcion.nombre}</option>
-                            ))}
-                        </select>
-                        <input type="file" onChange={handleImageChange} />
                     </div>
-                    <button className='btproductoFinca' onClick={resetProducto}>Cancelar</button>
-                    <button className='btproductoFinca' onClick={actualizarProducto}>Actualizar producto</button>
-                </>
+                    <h6>Categoria:</h6>
+                    <select  value={productoActual.Categoria} onChange={handleCategoriaChange}>
+                        {opcionesCategoria.map((opcion, index) => (
+                            <option key={index} value={opcion.id}>{opcion.nombre}</option>
+                        ))}
+                    </select>
+                    <input  type="file" onChange={handleImageChange} />
+                    <button  onClick={resetProducto}>Cancelar</button>
+                    <button  onClick={actualizarProducto}>Actualizar producto</button>
+                </div>
+
             ) : (
                 <>
-                    <div className="formFinca">
-                        <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
-                        <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
-                        <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" />
-                        <select className='btproductoFinca' value={productoActual.Categoria} onChange={handleCategoriaChange}>
+                    <div >
+                        <h1>Agregar producto:</h1>
+                        <div >
+                            <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
+                            <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
+                            <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "center", flexDirection:"column" }}>
+                        <select  value={productoActual.Categoria} onChange={handleCategoriaChange}>
                             {opcionesCategoria.map((opcion, index) => (
-                                <option className='btproductoFinca' key={index} value={opcion.id}>{opcion.nombre}</option>
+                                <option  key={index} value={opcion.id}>{opcion.nombre}</option>
                             ))}
                         </select>
-                        <input className='btproductoFinca' type="file" onChange={handleImageChange} />
-                        <button className='btproductoFinca' onClick={agregarProducto}>Agregar producto</button>
+                        <input  type="file" onChange={handleImageChange} />
+                        <button  onClick={agregarProducto}>Agregar producto</button>
+                        </div >
                     </div>
-
+                    <hr width="100%" style={{ margin: 20 }} />
                 </>
             )}
-            <div className='formFincagrid' >
-
+            <div >
+                {productos.length === 0 && <h3>Agrega productos para vender.</h3>}
                 {productos.map((producto) => {
-                    console.log(producto)
                     return (
-                        <div >
-                            <Producto key={producto.producto_id} producto={producto} llavecarrito={false} />
+                        <div key={producto.producto_id}>
+                            <Producto producto={producto} llavecarrito={false} />
                             <div style={{ margin: 8 }}>Acciones</div>
                             <div className='Acciones' data-label="Acciones">
-                                <button className='btproductoFinca' onClick={() => editarProducto(producto)}>Editar</button>
-                                <button className='btproductoFinca' onClick={() => eliminarProducto(producto.producto_id)}>Eliminar</button>
+                                <button onClick={() => editarProducto(producto)}>Editar</button>
+                                <button onClick={() => eliminarProducto(producto.producto_id)}>Eliminar</button>
                             </div>
                         </div>
                     )

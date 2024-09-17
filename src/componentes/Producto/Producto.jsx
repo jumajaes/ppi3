@@ -6,7 +6,6 @@ export const Producto = ({ producto, llavecarrito }) => {
 
     const { usuario, setResetCarrito } = useData()
     const [tel, settel] = useState("")
-    console.log(producto)
     const abrirWhatsApp = (tel, id, nombre, precio, categoria, descripcion, img) => {
         
         const mensaje = `Hola, me interesa este producto ID : ${id} NOMBRE: ${nombre},
@@ -50,7 +49,6 @@ export const Producto = ({ producto, llavecarrito }) => {
     }
 
     const agregarProductoCarrito = async (idUsuario, idProducto) => {
-        console.log(idUsuario, idProducto)
         try {
             const response = await fetch('http://localhost:5000/agregar-producto-carrito', {
                 method: 'POST',
@@ -68,7 +66,6 @@ export const Producto = ({ producto, llavecarrito }) => {
             }
 
             const data = await response.json();
-            console.log(data);
             return data;
         } catch (error) {
             console.error('Error al agregar producto:', error);

@@ -101,7 +101,7 @@ const Usuario = () => {
             </div>
             <div className='btusuario'>
               <label htmlFor="email">Correo Electrónico:</label>
-              <input type="email" id="email" name="email" value={datosUsuario.email} onChange={handleInputChange} autoComplete="off" />
+              <input type="text" id="email" name="email" value={datosUsuario.email} onChange={handleInputChange} autoComplete="off" />
             </div>
             <div className='btusuario'>
               <label htmlFor="direccion">Dirección:</label>
