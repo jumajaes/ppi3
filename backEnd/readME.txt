@@ -5,6 +5,9 @@ crea la carpeta donde quieres tener el proyecto
 --python -m virtualenv .
 --cd scripts
 --activate.bat
+(si falle reinstala los archivos de venv ...  
+../ppi3 (main) $ python -m venv /workspaces/ppi3/backEnd
+../ppi3 (main) $ source /workspaces/ppi3/backEnd/Scripts/activate)(bash)
 --pip install setuptools
 --pip install wheel
 --pip install pyodbc
@@ -45,11 +48,16 @@ volumes:
     )
 en la carpeta src/bd/... 
 -- en la ruta del .yml ejecuta un cmd descarga sql server
-docker pull mcr.microsoft.com/mssql/server" (docker desktop debe estar corriendo)
+docker pull mcr.microsoft.com/mssql/server" (docker desktop debe estar corriendo) 
+(si es desde codespace  
+--docker exec -it sqlserver /bin/bash
+--/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'pass en el .yml'
+
+)
 ------- conecta la bd a un gestor de bd (Host 127.0.0.1, port 1433)
 "SELECT name FROM sys.databases;"
 "CREATE DATABASE bioprep;"
-"use bioprep;"
+"use bioprep GO;"
 "CREATE TABLE crear_usuarios (cedula INT PRIMARY KEY, nombre NVARCHAR(50), apellido NVARCHAR(50), telefono NVARCHAR(15), email NVARCHAR(50), rol NVARCHAR(20), edad INT, direccion NVARCHAR(100), password NVARCHAR(50));"
 "CREATE TABLE agregar_fincas (id_finca INT PRIMARY KEY, id_usuario INT, nombre_finca NVARCHAR(50), FOREIGN KEY (id_usuario) REFERENCES crear_usuarios(cedula));" 
 "CREATE TABLE producto (producto_id INT PRIMARY KEY, Nombre NVARCHAR(50), Precio DECIMAL(10, 2), Categoría NVARCHAR(50), Descripción NVARCHAR(255), Imagen NVARCHAR(255), IDFinca INT, FOREIGN KEY (IDFinca) REFERENCES agregar_fincas(id_finca));"
