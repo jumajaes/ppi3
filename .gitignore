@@ -22,3 +22,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+backEnd/src/__pycache__/sentencias.cpython-312.pyc
