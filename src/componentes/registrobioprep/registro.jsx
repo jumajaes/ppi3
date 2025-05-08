@@ -17,9 +17,9 @@ export const Registro = () => {
     const [edad, setEdad] = useState("");
     const [direccion, setDireccion] = useState("");
     const navigate = useNavigate();
-    
+
     const handleRegistro = async () => {
-        
+
         const nuevoUsuario = {
             cedula,
             nombre,
@@ -31,12 +31,15 @@ export const Registro = () => {
             rol,
             password
 
-            
+
         };
-        
+
         registrarUsuario(nuevoUsuario)
-            .then(data => console.log(data))
-            .catch(error => console.log(error));
+            .then(data => {
+                console.log(data);
+                navigate('/Sesion')
+            })
+            .catch(error => {console.log(error)});
 
         setCedula("");
         setNombre("");
@@ -48,11 +51,8 @@ export const Registro = () => {
         setRol("");
         setEdad("");
         setDireccion("");
-
-        navigate('/Sesion')
-
     };
-    
+
     return (
         <div className="registro">
             <div >
@@ -72,7 +72,7 @@ export const Registro = () => {
                     <input className='inputregi' type="text" id="telefono" name="telefono" required value={telefono} onChange={(e) => setTelefono(e.target.value)} />
 
                     <label htmlFor="email">Correo Electrónico:</label>
-                    <input className='inputregi'  type="email" id="email" name="email" required autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input className='inputregi' type="email" id="email" name="email" required autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
 
                     <label htmlFor="password">Contraseña:</label>
                     <input className='inputregi' type="password" id="password" name="password" autoComplete="new-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -83,18 +83,18 @@ export const Registro = () => {
                     <label htmlFor="rol">Rol:</label>
                     <select className='inputregi' id="rol" name="rol" required value={rol} onChange={(e) => setRol(e.target.value)}>
                         <option value="">Seleccione un rol</option>
-                        <option value="Vendedor">Vendedor</option>
-                        <option value="Comprador">Comprador</option>
+                        <option value="1">Vendedor</option>
+                        <option value="2">Comprador</option>
                     </select>
 
                     <label htmlFor="edad">Edad:</label>
-                    <input className='inputregi'  type="number" id="edad" name="edad" required value={edad} onChange={(e) => setEdad(e.target.value)} />
+                    <input className='inputregi' type="number" id="edad" name="edad" required value={edad} onChange={(e) => setEdad(e.target.value)} />
 
                     <label htmlFor="direccion">Dirección:</label>
                     <input className='inputregi' type="text" id="direccion" name="direccion" required value={direccion} onChange={(e) => setDireccion(e.target.value)} />
                     <button className='inputregi' onClick={handleRegistro}>REGISTRARSE</button>
                 </form>
-              
+
             </div>
         </div>
     );

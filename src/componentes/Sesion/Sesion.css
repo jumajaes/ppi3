@@ -1,53 +1,143 @@
-.sesion{
+.sesion {
     display: grid;
-    grid-template-columns: 1fr ;
+    grid-template-columns: 1fr;
     justify-items: center;
-    gap: 5px;
-    margin: 10px;
-    margin-top: 20px;
-}
-
-.fomulariosesion{
-    border-radius: 30%;
-    display: grid;
-    grid-template-columns: 1fr ;
-    justify-items: center;
-    padding: 1px;
-    gap: 5px;
-    margin: 30px;
-}
-
-.btsesion{
-    display: inline-block;
+    gap: 15px;
     margin: 20px;
-    padding: 12px;
+}
+
+.fomulariosesion {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 10px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    /* Light border for better structure */
+    border-radius: 10px;
+    /* Rounded corners for a soft look */
+    background-color: #f9f9f9;
+    /* Subtle background for the form */
+    width: 100%;
+    max-width: 400px;
+    /* Limits the form's size on large screens */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Light shadow for depth */
+}
+
+.labelsesion {
     font-size: 16px;
     font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
-    border: 5px;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+    width: 100%;
+}
+
+.btsesion {
+    width: 100%;
+    /* Full-width for uniformity */
+    max-width: 350px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    /* Space between inputs and buttons */
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    /* Light border for inputs */
     border-radius: 5px;
-    background-color: #64db6a;
+    /* Rounded edges */
+    box-sizing: border-box;
+    background-color: #fff;
+    /* White background for inputs */
+    transition: all 0.3s ease;
+    color: #333;
+    /* Dark text color for readability */
+}
+
+.btRegister {
+    width: 100%;
+    /* Full-width for uniformity */
+    max-width: 350px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    /* Space between inputs and buttons */
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    /* Light border for inputs */
+    border-radius: 5px;
+    /* Rounded edges */
+    box-sizing: border-box;
+    background-color: #fff;
+    /* White background for inputs */
+    transition: all 0.3s ease;
+    color: #333;
+    /* Dark text color for readability */
+    text-align: center;
+}
+
+.btsesion:hover,
+.btsesion:focus {
+    border-color: #4caf50;
+    /* Green border on focus/hover */
+    background-color: #e8f5e9;
+    /* Light green tint for interaction */
+    outline: none;
+}
+
+button.btsesion {
+    background-color: #4caf50;
+    /* Green button */
     color: white;
-    transition: background-color 0.3s ease;
-    max-width: 270px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    transition: all 0.3s ease;
 }
 
-
-.btsesion{
-    font-size: 28px;
+button.btsesion:hover {
+    background-color: #45a049;
+    /* Darker green on hover */
 }
 
-.textsesion{
-  font-size: 18px; ;
-
+.textsesion {
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+    margin: 10px 0;
 }
 
+.text {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.toRegister {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toRegisterContainer {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
 
 @media (max-width: 500px) {
-    .btsesion{
-        font-size: 12px;
+    .fomulariosesion {
+        padding: 15px;
+        gap: 8px;
+    }
+
+    .btsesion {
+        font-size: 14px;
+    }
+
+    .textsesion {
+        font-size: 16px;
     }
 }

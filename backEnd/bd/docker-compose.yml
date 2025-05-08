@@ -9,7 +9,7 @@ services:
       - "1433:1433"
     volumes:
       - sqlserverdata:/var/opt/mssql
-    user: root
+    user: root #el usuario de la bd es sa (usuario por defecto de SQL Server)
     command: >
       /bin/bash -c "
       apt-get update &&

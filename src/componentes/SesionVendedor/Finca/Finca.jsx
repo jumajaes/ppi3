@@ -1,40 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import "./Finca.css"
 import { useParams } from 'react-router-dom';
 import { useData } from '../../../contexto/variables';
 import { Producto } from "../../Producto/Producto";
+import "./Finca.css";
 
 export function Finca() {
     const opcionesCategoria = [
-        { id: "", nombre: "Selecciona categoría / Ninguna" },
-        { id: "1", nombre: "Abono" },
+        { id: "10", nombre: "Sin Categoria" },
+        { id: "1", nombre: "Limpiador" },
         { id: "2", nombre: "Fertilizante" },
         { id: "3", nombre: "Fungicida" },
         { id: "4", nombre: "Plaguicida" },
         { id: "5", nombre: "Herbicida" },
         { id: "6", nombre: "Nutridor" },
         { id: "7", nombre: "Hidratante" },
-        { id: "8", nombre: "Calcio" }
+        { id: "8", nombre: "Calcio" },
+        { id: "9", nombre: "Abono" },
     ];
 
     const { idFinca } = useParams();
-    const { obtenerProductos } = useData();
+    const { obtenerProductos, usuario } = useData();
 
-    // Estado inicial del producto
-    const productoInicial = { id: '', Nombre: '', Descripcion: '', Precio: '', Categoria: opcionesCategoria[0].id, Imagen: '', IDFinca: idFinca };
-    var base64Data
+    const productoInicial = { id: '', Nombre: '', Descripcion: '', Precio: '', Categoria: opcionesCategoria[0].id, Imagen: '', IDFinca: idFinca, contacto: usuario.telefono };
     const [productos, setProductos] = useState([]);
     const [productoActual, setProductoActual] = useState(productoInicial);
     const [modoEdicion, setModoEdicion] = useState(false);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        obtenerProductos().then((resolucion) => {
-            setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
-        }).catch((error) => {
-            console.error('Error al obtener productos:', error);
-        });
-    }, [idFinca, obtenerProductos]);
 
     const handleCategoriaChange = (e) => {
         setProductoActual({ ...productoActual, Categoria: e.target.value });
@@ -42,12 +33,14 @@ export function Finca() {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-
         if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png')) {
-            reader.onload = function (event) {
-                base64Data = event.target.result;
-                setProductoActual({ ...productoActual, Imagen: base64Data });
+            if (file.size > 5 * 1024 * 1024) { // 5MB máximo
+                setError('El archivo es demasiado grande, debe ser menor a 5MB.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setProductoActual({ ...productoActual, Imagen: event.target.result });
             };
             reader.readAsDataURL(file);
         } else {
@@ -56,104 +49,92 @@ export function Finca() {
     };
 
     const validarProducto = () => {
-        if (!productoActual.Nombre || !productoActual.Descripcion || !productoActual.Precio) {
-            return 'Todos los campos son obligatorios.';
-        }
-        if (isNaN(productoActual.Precio) || parseInt(productoActual.Precio) <= 0) {
-            return 'El precio debe ser un número entero positivo.';
-        }
-        if (productoActual.Categoria === "") {
-            return 'Debe seleccionar una categoría válida.';
-        }
-        return '';
+        if (!productoActual.Nombre || !productoActual.Descripcion || !productoActual.Precio) return 'Todos los campos son obligatorios.';
+        if (isNaN(productoActual.Precio) || parseInt(productoActual.Precio) <= 0) return 'El precio debe ser un número entero positivo.';
+        if (productoActual.Categoria === "") return 'Debe seleccionar una categoría válida.';
+        return null; // Cambié el retorno a `null` en lugar de `false`
     };
 
-    const agregarProducto = () => {
+    const agregarProducto = async () => {
         const errorMsg = validarProducto();
         if (errorMsg) {
             setError(errorMsg);
             return;
         }
 
-        fetch(`http://localhost:5000/agregar_producto`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productoActual)
-        })
-            .then(response => response.json())
-            .then(data => {
-                obtenerProductos().then((resolucion) => {
-                    setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
-                }).catch((error) => {
-                    console.error('Error al obtener productos:', error);
-                });
-                setProductoActual(productoInicial);
-                setError('');
+        try {
+            const response = await fetch("https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/agregar_producto", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productoActual),
             });
+
+            if (!response.ok) throw new Error(`Error al agregar producto: ${response.status}`);
+            alert('Producto agregado correctamente.');
+
+            obtenerProductos().then((resp) => {
+                setProductos(resp);
+                resetProducto();
+            });
+
+        } catch (error) {
+            alert('Error al agregar producto:', error);
+        }
     };
 
-    const actualizarProducto = () => {
-        console.log(productoActual.id, "&&&&&&&&&&&&&&&&&&")
+    const actualizarProducto = async () => {
         const errorMsg = validarProducto();
         if (errorMsg) {
             setError(errorMsg);
             return;
         }
 
-        if (!productoActual.Imagen) {
-            const productoExistente = productos.find((producto) => producto.producto_id === productoActual.id);
-            if (productoExistente) {
-                setProductoActual({ ...productoActual, Imagen: productoExistente.Imagen });
-            }
-        }
-        fetch(`http://localhost:5000/editar_producto/${productoActual.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productoActual)
-        })
-            .then(response => response.json())
-            .then(data => {
-                obtenerProductos().then((resolucion) => {
-                    setProductos(resolucion.filter((producto) => producto.id_finca === parseInt(idFinca)));
-                }).catch((error) => {
-                    console.error('Error al obtener productos:', error);
-                });
-                setProductoActual(productoInicial);
-                setModoEdicion(false);
-                setError(''); // Clear error after successful update
+        const categoria = opcionesCategoria.find((op) => op.nombre === productoActual.Categoria);
+        const categoriaId = categoria ? categoria.id : '10';  // '10' es el valor por defecto si no se encuentra la categoría
+
+        try {
+            const response = await fetch(`https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/editar_producto/${productoActual.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...productoActual, Categoria: categoriaId }),
             });
+
+            if (response.status !== 200) throw new Error(`Error al actualizar producto: ${response.status}`);
+            alert('Producto actualizado correctamente.');
+
+            obtenerProductos().then((resp) => {
+                setProductos(resp);
+                resetProducto();
+            });
+
+        } catch (error) {
+            console.error('Error al actualizar producto:', error);
+        }
     };
 
-    const eliminarProducto = (id) => {
-        fetch(`http://localhost:5000/eliminar-producto/${id}`, {
-            method: 'DELETE'
-        })
-            .then(() => {
-                const nuevosProductos = productos.filter((producto) => producto.id !== id);
-                setProductos(nuevosProductos);
-                obtenerProductos();
+    const eliminarProducto = async (id) => {
+        try {
+            const response = await fetch(`https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/eliminar-producto/${id}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error(`Error al eliminar producto: ${response.status}`);
+            alert('Producto eliminado correctamente.');
+            obtenerProductos().then((resp) => {
+                setProductos(resp);
+                resetProducto();
             });
+        } catch (error) {
+            console.error('Error al eliminar producto:', error);
+        }
     };
 
     const editarProducto = (producto) => {
-        const idFincaNumero = parseInt(producto.id_finca);
-        if (isNaN(idFincaNumero)) {
-            console.error('IDFinca no es un número válido:', producto.id_finca);
-            return;
-        }
-
         const productoNormalizado = {
-            id: producto.producto_id || '',
-            Nombre: producto.nombre || '',
-            Descripcion: producto.descripcion || '',
-            Precio: producto.precio || '',
-            Categoria: producto.categoria_id || '',
-            Imagen: producto.iamgen || '',
-            IDFinca: idFincaNumero
+            id: producto.id || '',
+            Nombre: producto.name || '',
+            Descripcion: producto.description || '',
+            Precio: producto.price || '',
+            Categoria: producto.name_category || '',
+            Imagen: producto.image || '',
+            IDFinca: producto.id_farm
         };
 
         setProductoActual(productoNormalizado);
@@ -166,70 +147,67 @@ export function Finca() {
         setError('');
     };
 
+    useEffect(() => {
+        const cargarProductos = async () => {
+            try {
+                const resolucion = await obtenerProductos();
+                setProductos(resolucion.filter((producto) => producto.id_farm === idFinca));
+            } catch (error) {
+                console.error('Error al obtener productos:', error);
+            }
+        };
+
+        cargarProductos();
+    }, [idFinca]);
+
     return (
-        <div >
+        <div>
             {error && <div>{error}</div>}
             {modoEdicion ? (
-                <div >
-                    <h1>ID: {productoActual.id}</h1>
-                    <div >
-                        <h6>Nombre:</h6>
-                        <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
-                        <h6>Descripción:</h6>
-                        <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
-                        <h6>Precio:</h6>
-                        <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" required />
-                    </div>
-                    <h6>Categoria:</h6>
-                    <select  value={productoActual.Categoria} onChange={handleCategoriaChange}>
+                <div>
+                    <h1>Editar Producto</h1>
+                    <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" />
+                    <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" />
+                    <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" />
+                    <select value={productoActual.Categoria} onChange={handleCategoriaChange}>
                         {opcionesCategoria.map((opcion, index) => (
                             <option key={index} value={opcion.id}>{opcion.nombre}</option>
                         ))}
                     </select>
-                    <input  type="file" onChange={handleImageChange} />
-                    <button  onClick={resetProducto}>Cancelar</button>
-                    <button  onClick={actualizarProducto}>Actualizar producto</button>
+                    <input type="file" onChange={handleImageChange} />
+                    <button onClick={resetProducto}>Cancelar</button>
+                    <button onClick={actualizarProducto}>Actualizar Producto</button>
                 </div>
-
             ) : (
-                <>
-                    <div >
-                        <h1>Agregar producto:</h1>
-                        <div >
-                            <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" required />
-                            <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" required />
-                            <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" />
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "center", flexDirection:"column" }}>
-                        <select  value={productoActual.Categoria} onChange={handleCategoriaChange}>
-                            {opcionesCategoria.map((opcion, index) => (
-                                <option  key={index} value={opcion.id}>{opcion.nombre}</option>
-                            ))}
-                        </select>
-                        <input  type="file" onChange={handleImageChange} />
-                        <button  onClick={agregarProducto}>Agregar producto</button>
-                        </div >
-                    </div>
-                    <hr width="100%" style={{ margin: 20 }} />
-                </>
+                <div>
+                    <h1>Agregar Producto</h1>
+                    <input value={productoActual.Nombre} onChange={(e) => setProductoActual({ ...productoActual, Nombre: e.target.value })} placeholder="Nombre" />
+                    <input value={productoActual.Descripcion} onChange={(e) => setProductoActual({ ...productoActual, Descripcion: e.target.value })} placeholder="Descripción" />
+                    <input value={productoActual.Precio} onChange={(e) => setProductoActual({ ...productoActual, Precio: e.target.value })} placeholder="Precio" />
+                    <select value={productoActual.Categoria} onChange={handleCategoriaChange}>
+                        {opcionesCategoria.map((opcion, index) => (
+                            <option key={index} value={opcion.id}>{opcion.nombre}</option>
+                        ))}
+                    </select>
+                    <input type="file" onChange={handleImageChange} />
+                    <button onClick={agregarProducto}>Agregar Producto</button>
+                </div>
             )}
-            <div >
-                {productos.length === 0 && <h3>Agrega productos para vender.</h3>}
-                {productos.map((producto) => {
-                    return (
-                        <div key={producto.producto_id}>
+            <div>
+                {productos.length === 0 ? <h3>No hay productos disponibles.</h3> : (
+                    productos.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase())).map((producto) => (
+                        <div key={producto.id}>
                             <Producto producto={producto} llavecarrito={false} />
                             <div style={{ margin: 8 }}>Acciones</div>
                             <div className='Acciones' data-label="Acciones">
                                 <button onClick={() => editarProducto(producto)}>Editar</button>
-                                <button onClick={() => eliminarProducto(producto.producto_id)}>Eliminar</button>
+                                <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
                             </div>
                         </div>
-                    )
-                })}
+                    ))
+                )}
             </div>
         </div>
-
     );
 }
 

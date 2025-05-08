@@ -8,6 +8,7 @@ export const useData = () => useContext(DataContext);
 export const DataProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(JSON.parse(sessionStorage.getItem('usuario')) || null);
   const [BtIniciarSesion, setBtIniciarSesion] = useState("INICIAR");
+  console.log(usuario)
   const [resetCarrito, setResetCarrito] = useState(false)
 
   useEffect(() => {

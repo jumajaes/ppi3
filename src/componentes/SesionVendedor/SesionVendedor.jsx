@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import imgFinca from './R.jpg'
 import "./SesionVendedor.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useData } from "../../contexto/variables";
 
 export function SesionVendedor() {
@@ -10,9 +10,9 @@ export function SesionVendedor() {
     const {usuario} = useData()
     console.log(usuario)
 
-    const idUsuario = usuario.id;
+    const idUsuario = usuario.cedula;
     const obtenerFincas = () => {
-        fetch(`http://localhost:5000/obtener_fincas_usuario?id_usuario=${idUsuario}`)
+        fetch(`https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/obtener_fincas_usuario?id_usuario=${idUsuario}`)
             .then(response => response.json())
             .then(data =>{ 
                 console.log(data.fincas)
@@ -25,7 +25,7 @@ export function SesionVendedor() {
     const agregarBoton = (nombre) => {
 
         console.log(nombre, idUsuario)
-        fetch('http://localhost:5000/agregar_finca', {
+        fetch('https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/agregar_finca', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export function SesionVendedor() {
 
     const eliminarBoton = (index) => {
         console.log(index)
-        fetch(`http://localhost:5000/eliminar_finca`, {
+        fetch(`https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/eliminar_finca`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,6 +67,7 @@ export function SesionVendedor() {
         });
     };
     
+    if(!usuario) useNavigate()("/")
 
     return (
         <div className="Fincas">
@@ -80,14 +81,14 @@ export function SesionVendedor() {
                 Agregar Finca
             </button>
             {botones.map((finca) => (
-                <div  key={finca.id_finca} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <div className="btFinca" >{finca.nombre_finca}</div>
+                <div  key={finca.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <div className="btFinca" >{finca.name}</div>
                     <Link className="btFinca" onClick={()=>{
                         
-                    }} to={`/finca/${finca.id_finca}`}>
+                    }} to={`/finca/${finca.id}`}>
                     
                     <img className="imgFinca" src={imgFinca} alt="imagen" style={{ maxWidth: '300px', minHeight: '300px' }} /></Link>
-                    <button className="btFinca" onClick={() => eliminarBoton(finca.id_finca)} >x Eliminar Finca</button>
+                    <button className="btFinca" onClick={() => eliminarBoton(finca.id)} >x Eliminar Finca</button>
                     <hr width="90%"/>
                 </div>
                 

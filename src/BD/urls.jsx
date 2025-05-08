@@ -1,9 +1,11 @@
-const API_URL = 'http://localhost:5000';
+//const API_URL = 'http://localhost:5000';
+const API_URL = 'https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev';
+
 
 const APIUrls = {
   USUARIOS_URL: `${API_URL}/usuarios`,
   ROLES_URL: `${API_URL}/roles`,
-  PRODUCTOS_URL: `${API_URL}/productos`,
+  PRODUCTS_URL: `${API_URL}/products`,
   FINCAS_URL: `${API_URL}/fincas`,
   CARRITO_URL: `${API_URL}/carrito`,
   REGISTRAR_USUARIO_URL : `${API_URL}/registrar-usuario`, 

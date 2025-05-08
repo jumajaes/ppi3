@@ -1,0 +1,17 @@
+base de datos----
+
+install docker
+ejecuta docker-compose up (en la carpeta donde este el archivo .yml)
+docker ps -a ( para verificar los contenedores existentes)
+docker start <id-contenedor(pueden ser los primeros 3 digitos)>
+docker exec -it <nombre_del_contenedor> /bin/bash (para ingresar a el contenedor donde esta corriendo la bd)
+-- docker exec -it sqlserver /bin/bash
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'TuContraseña' (esto es en local, la contraseña esta definida 
+    en el archivo .yml 'SA_PASSWORD', el usuario por defecto de SQL Server es sa como se ve en la instruccion)
+ya estando dentro del entrorno sql podemos ejecutar instrucciones para crear las tablas necesarias y demas....
+
+Si quieres usar un db client te recomiendo Database Client de Weijan chen en vcs extensions para conectarte en local es 
+    facil el local host es el mismo 127.0.0.1 los ports estan definidos en el archivo .yml (en el caso de este proyecto
+    ports:"1433:1433") donde uno se refiere al puerto del contenedor y otro al puerto de la maquina local (suelen ser iguales 
+    para mejor organizacion y entendimiento)
+

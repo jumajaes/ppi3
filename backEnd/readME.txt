@@ -4,7 +4,7 @@ crea la carpeta donde quieres tener el proyecto
 --pip install virtualenv (es un entorno virtual)
 --python -m virtualenv .
 --cd scripts
---activate.bat
+--activate ((en bash y en la ultimaversion que utilicé de python me aprece deprecado recomienda usar 'conda activate'))
 (si falle reinstala los archivos de venv ...  
 ../ppi3 (main) $ python -m venv /workspaces/ppi3/backEnd
 ../ppi3 (main) $ source /workspaces/ppi3/backEnd/Scripts/activate)(bash)
@@ -114,6 +114,6 @@ cd src
 python Conexion.py
 ------------------
 cd scripts
-deactivate.bat
+deactivate (en bash y en la ultimaversion que utilicé de python me aprece deprecado recomienda usar conda deactivate)
 
 -----------------------------------------------

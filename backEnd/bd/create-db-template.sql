@@ -39,8 +39,8 @@ CREATE TABLE categorias (
 );
 
 -- Crear tabla productos con IDFinca y categoria_id como claves foráneas
-CREATE TABLE productos (
-    producto_id INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE products (
+    producto_id 
     nombre NVARCHAR(50),
     precio DECIMAL(10, 2),
     descripcion NVARCHAR(255),

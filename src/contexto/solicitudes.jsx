@@ -3,7 +3,7 @@ import APIUrls from '../BD/urls.jsx';
 
 const obtenerProductos = async () => {
   try {
-    const response = await fetch(APIUrls.PRODUCTOS_URL)
+    const response = await fetch(APIUrls.PRODUCTS_URL)
     const data = await response.json();
     return data;
   } catch (error) {
@@ -15,7 +15,7 @@ const obtenerProductos = async () => {
 
 const registrarUsuario = async (nuevoUsuario) => {
   console.log(nuevoUsuario)
-  const response = await fetch('https://localhost:5000/registrar-usuario', {
+  const response = await fetch('https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/registrar-usuario', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -33,16 +33,18 @@ const registrarUsuario = async (nuevoUsuario) => {
 
 const iniciarSesion = async (email, password) => {
   try {
-    const response = await fetch('http://localhost:5000/iniciar-sesion', {
+    const response = await fetch('https://silver-barnacle-rxq4pw7g9763xw4x-5000.app.github.dev/sesion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
-    console.log(response)
+    console.log(response.ok)
     if (response.ok) {
+      console.log('yy')
       const data = await response.json();
+      console.log(data)
       return { exito: true, mensaje: data.mensaje, usuario: data.usuario };
     } else {
       const errorData = await response.json();
@@ -65,6 +67,7 @@ const actualizarDatosUsuario = async (datosUsuario) => {
       body: JSON.stringify(datosUsuario),
     });
     const result = await response.json();
+    console.log(result)
     return result;
   } catch (error) {
     console.error('Error actualizando datos del usuario:', error);

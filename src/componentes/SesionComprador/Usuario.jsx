@@ -54,7 +54,8 @@ const Usuario = () => {
     }
 
     const result = await actualizarDatosUsuario(datosActualizados);
-    if (result) {
+    console.log(result)
+    if (result && result.exito) {
       setMostrarActualizarContrasena(false)
       console.log("Datos actualizados correctamente");
       setUsuario(datosActualizados)
@@ -74,11 +75,12 @@ const Usuario = () => {
         CERRAR SESION
       </button>
 
-      <button className='btusuario' onClick={() => {
-        (datosUsuario.rol >= 1 && datosUsuario.rol <= 3 ) ? navigate('/sesionvendedor') : alert("Deber ser un vendedor.")
+
+      {datosUsuario.rol === "1" && <button className='btusuario' onClick={() => {
+        (datosUsuario.rol === "1") ? navigate('/sesionvendedor') : alert("Deber ser un vendedor.")
       }}>
         MIS FINCAS
-      </button>
+      </button>}
       <h2>Datos del Usuario</h2>
       <form className="usuario-form" onSubmit={handleSubmit} autoComplete="off">
         {datosUsuario && (

@@ -13,15 +13,20 @@ export const Sesion = () => {
     e.preventDefault();
     if (correo === "") {
       window.alert("Campo correo es obligatorio");
-    }  else {
+    } else {
       const result = await iniciarSesion(correo, contrasena);
+      console.log(result);
       if (result.exito) {
+        console.log(result.usuario)
         if (result.usuario) {
           setUsuario(result.usuario);
           setBtIniciarSesion("PERFIL")
-          if (result.usuario.rol === 3) {
+          console.log(result.usuario.rol)
+          console.log(result.usuario.rol === '1')
+          if (result.usuario.rol === '1') {
+            console.log(result.usuario.rol)
             navigate('/sesionvendedor');
-          } else if (result.usuario.rol === 4 || result.usuario.rol === 1 || result.usuario.rol === 2 ) {
+          } else if (result.usuario.rol === '2') {
             navigate('/usuario');
           }
         }
@@ -45,7 +50,7 @@ export const Sesion = () => {
       <div className="text">
         INICIAR SESION
       </div>
-      
+
       <form className="fomulariosesion" onSubmit={manejarSubmit}>
         <label className="labelsesion" id="username">Correo Electronico</label>
         <input
@@ -53,7 +58,7 @@ export const Sesion = () => {
           type="text"
           name="Correo"
           className="btsesion"
-          placeholder="Correo"
+          placeholder="📧"
           value={correo}
           onChange={handleCorreoChange}
         />
@@ -64,7 +69,7 @@ export const Sesion = () => {
           type="password"
           name="contraseña"
           className="btsesion"
-          placeholder="Contraseña"
+          placeholder="🔑"
           value={contrasena}
           onChange={handleContrasenaChange}
         />
@@ -72,16 +77,21 @@ export const Sesion = () => {
         {/* {<Link className='' to="/olvidopwd">¿Olvidó su contraseña?</Link>} */}
 
         <button className="btsesion" type="submit">
-          INICIAR
+          INICIAR🤝
         </button>
       </form>
 
-      <h1 className='textsesion'>
-          ↓ PARA REGISTRARSE ↓
-        </h1>
-        <Link className='btsesion' to="/registro">REGISTRARSE</Link>
-        <hr width="90%" />
-        
+      <div className='toRegisterContainer'>
+        <div className='toRegister'>
+          <h1 className='textsesion'>
+            👋↓ REGISTRATE AQUI ↓👌
+          </h1>
+          <div>
+          🤘<Link className='btRegister' to="/registro">REGISTRARSE</Link>🤘
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }

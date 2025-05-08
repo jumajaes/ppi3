@@ -1,76 +1,89 @@
-/* Styles for User Section */
+/* Estilos para la sección de usuario */
 .usuario {
-    display: grid;
-    grid-template-columns: 1fr; /* Corrected from 1f to 1fr */
-    justify-items: center;
-    padding: 20px;
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    margin: 20px auto;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 800px; /* Limita el ancho para mayor legibilidad */
 }
 
-/* Styles for User Form */
+/* Estilos para el formulario de usuario */
 .usuario-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 15px;
-    width: 100%; /* Ensure full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
 }
 
-/* Styles for User Button */
+/* Botón de usuario */
 .btusuario {
-    display: block; /* Changed to block for proper sizing */
     margin: 10px 0;
-    padding: 12px; /* Set padding to be equal on all sides */
-    font-size: 16px;
+    padding: 15px 20px;
+    font-size: 18px;
     font-weight: bold;
-    text-align: center;
-    color: white; /* Moved color to top */
+    color: white;
     cursor: pointer;
-    border: none; /* Set border to none */
-    border-radius: 5px;
+    border: none;
+    border-radius: 6px;
     background-color: #64db6a;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100%; /* Allow button to fill width */
-    max-width: 200px; /* Set a max width for buttons */
+    transition: background-color 0.3s, transform 0.2s;
+    max-width: 250px;
+    text-align: center;
 }
 
 .btusuario:hover {
-    background-color: #57c961; /* Darker green on hover */
-    transform: translateY(-2px); /* Slight lift effect */
+    background-color: #57c961;
+    transform: scale(1.05); /* Efecto de zoom al hover */
 }
 
-/* Styles for Password Update Section */
+/* Sección para actualizar la contraseña */
 .actualizarcontrasenausuario {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px; /* Added gap for better spacing */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
 }
 
-/* Styles for User Data Section */
+/* Sección de datos del usuario */
 .datosdeusuario {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive column count */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    justify-items: center;
-    width: 100%; /* Ensure full width */
+    width: 100%;
+    align-items: center;
 }
 
-/* Responsive Styles */
-@media (max-width: 500px) {
-    .datosdeusuario {
-        grid-template-columns: 1fr; /* Single column for small screens */
-    }
-
+/* Estilos responsivos */
+@media (max-width: 768px) {
     .usuario {
-        padding: 15px; /* Reduced padding for smaller screens */
+        padding: 20px;
     }
 
     .btusuario {
-        padding: 10px; /* Adjusted padding */
-        max-width: 100%; /* Ensure button fits the screen */
+        font-size: 16px;
+        padding: 10px 15px;
+        max-width: 100%;
+    }
+
+    .datosdeusuario {
+        grid-template-columns: 1fr; /* Una sola columna para pantallas pequeñas */
     }
 }
 
+@media (max-width: 500px) {
+    .usuario {
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .btusuario {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
