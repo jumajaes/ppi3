@@ -36,7 +36,7 @@ export const Homeppal = () => {
     const filtered = productos.filter((producto) => {
       console.log(producto)
       console.log(categoria)
-      const matchesSearch = producto.name.toLowerCase().includes(value.toLowerCase());
+      const matchesSearch = producto.name_category.toLowerCase().includes(value.toLowerCase());
       const matchesCategory = categoria === "" || producto.category === parseInt(categoria);
       return matchesSearch && matchesCategory;
     });

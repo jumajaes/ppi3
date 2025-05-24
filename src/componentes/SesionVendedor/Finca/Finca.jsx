@@ -34,7 +34,7 @@ export function Finca() {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png')) {
-            if (file.size > 5 * 1024 * 1024) { // 5MB máximo
+            if (file.size > 100000) {
                 setError('El archivo es demasiado grande, debe ser menor a 5MB.');
                 return;
             }
@@ -73,7 +73,7 @@ export function Finca() {
             alert('Producto agregado correctamente.');
 
             obtenerProductos().then((resp) => {
-                setProductos(resp);
+                setProductos(resp.filter((producto) => producto.id_farm === idFinca));
                 resetProducto();
             });
 
@@ -103,7 +103,7 @@ export function Finca() {
             alert('Producto actualizado correctamente.');
 
             obtenerProductos().then((resp) => {
-                setProductos(resp);
+                setProductos(resp.filter((producto) => producto.id_farm === idFinca));
                 resetProducto();
             });
 
@@ -118,7 +118,7 @@ export function Finca() {
             if (!response.ok) throw new Error(`Error al eliminar producto: ${response.status}`);
             alert('Producto eliminado correctamente.');
             obtenerProductos().then((resp) => {
-                setProductos(resp);
+                setProductos(resp.filter((producto) => producto.id_farm === idFinca));
                 resetProducto();
             });
         } catch (error) {

@@ -232,7 +232,6 @@ def conectar():
         print("Error de conexión:", ex)
         return None
 
-
 @app.route("/obtener-productos-carrito/<int:id_usuario>", methods=["GET"])
 def obtener_productos_carrito(id_usuario):
     try:
@@ -246,8 +245,8 @@ def obtener_productos_carrito(id_usuario):
             productos_carrito = [
                 dict(zip([column[0] for column in cursor.description], row))
                 for row in productos_carrito
-            ]
-
+            ]                           
+            print(productos_carrito)
             conexion.close()
             return jsonify(productos_carrito)
         else:
